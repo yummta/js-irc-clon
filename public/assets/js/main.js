@@ -1,5 +1,3 @@
-console.log("Cool");
-
 const $buttonLogin = document.getElementById("js-button-loggin");
 const $inputUsername = document.getElementById("js-input-username");
 
@@ -24,6 +22,7 @@ function createChannel(channelName) {
   if (!channelExists) {
     channels[channelName] = channelCreated.channelName;
     joinChannel(channelName);
+    changeActiveChannel(channelName);
     return channels;
   }
 }
@@ -38,7 +37,6 @@ function joinChannel(channelName) {
 function changeActiveChannel(channelName) {
   const channelExists = userChannels.includes(channelName);
   if (channelExists) {
-    activeChannel = channels[channelName];
-    return activeChannel;
+    return (activeChannel = channels[channelName]);
   }
 }
