@@ -15,3 +15,14 @@ function login() {
     console.log(`[Save username ${username} in localStorage]`);
   }
 }
+
+$buttonCreateChannel.addEventListener("click");
+
+function login() {
+  event.preventDefault();
+  const username = $inputUsername.value;
+  if (username) {
+    localStorage.setItem("username", username);
+    console.log(`[Save username ${username} in localStorage]`);
+  }
+}
