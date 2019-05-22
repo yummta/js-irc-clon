@@ -3,11 +3,11 @@
 Create a multi channel chat application using the WebSocket server in [codeableorg/websocket-server](https://github.com/codeableorg/websocket-server) as your WebSocket server.
 
 ## Team
-Carlos Sandoval
-Cristian Granda
-Lian Nivi
-Mayra Navarro
-Paul Portillo
+- Carlos Sandoval
+- Cristian Granda
+- Lian Nivin
+- Mayra Navarro
+- Paul Portillo
 ## Requirements
 
 - [ ] The user should be asked for a username when trying to access.
