@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template: 10% 80% 10% / 20% 60% 20%;
+}
+
+.header {
+  grid-column: 1 / span end;
+}
+.channellist {
+  grid-row: 2 / span end;
+}
+.footer {
+  grid-column: 2 / span end;
+}
