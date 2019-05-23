@@ -49,20 +49,6 @@ function createChannel(channelName) {
   // joinChannel(channelName);
 }
 
-// function joinChannel(channelName) {
-//   if (!userChannels.includes(channelName)) {
-//     userChannels.push(channelName);
-//     return userChannels;
-//   }
-// }
-
-// function changeActiveChannel(channelName) {
-//   const channelExists = userChannels.includes(channelName);
-//   if (channelExists) {
-//     return (activeChannel = channels[channelName]);
-//   }
-// }
-
 //Socket Chat
 pushingData = (text, obj, user, date) => {
   obj.ircMessages.general.messages.push({
