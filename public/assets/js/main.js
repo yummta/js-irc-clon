@@ -69,6 +69,19 @@ function login() {
   }
 }
 
+// localStorage.setItem("userChannels", JSON.stringify(["english", "varios", "forobardo"]))
+function renderUserChanels() {
+  const userChannels = localStorage.getItem("userChannels");
+  const arrUserChannels = JSON.parse(userChannels);
+  let htmlUserChannels = "";
+  arrUserChannels.forEach(channelName => {
+    htmlUserChannels += `<li>${channelName}</li>`;
+  });
+  $listUserChannels.innerHTML = htmlUserChannels;
+}
+
+renderUserChanels();
+
 let channels = { general: { name: "general" } };
 let userChannels = ["general"];
 let activeChannel = channels["general"];
