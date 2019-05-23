@@ -4,6 +4,7 @@ const $buttonCreateChannel = document.getElementById(
   "js-button-create-channel"
 );
 const $inputChannel = document.getElementById("js-input-channel");
+const $listUserChannels = document.getElementById("js-list-user-channels");
 
 $buttonLogin.addEventListener("click", login);
 
@@ -17,6 +18,18 @@ function login() {
 }
 
 $buttonCreateChannel.addEventListener("click", handleCreation);
+// localStorage.setItem("userChannels", JSON.stringify(["english", "varios", "forobardo"]))
+function renderUserChanels() {
+  const userChannels = localStorage.getItem("userChannels");
+  const arrUserChannels = JSON.parse(userChannels);
+  let htmlUserChannels = "";
+  arrUserChannels.forEach(channelName => {
+    htmlUserChannels += `<li>${channelName}</li>`;
+  });
+  $listUserChannels.innerHTML = htmlUserChannels;
+}
+
+renderUserChanels();
 
 let channels = { general: { name: "general" } };
 let userChannels = ["general"];
@@ -53,4 +66,115 @@ function changeActiveChannel(channelName) {
   if (channelExists) {
     return (activeChannel = channels[channelName]);
   }
+}
+
+//new Date(year, month, date, hours, minutes, seconds, ms)
+function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  var strTime = hours + ":" + minutes + " " + ampm;
+  return strTime;
+}
+
+function formatdate(someDate) {
+  let FormattedDate = "nada";
+  let today = new Date();
+  let yesterday = new Date();
+  yesterday.setDate(today.getDate() - 1);
+
+  if (
+    someDate.getDate() == today.getDate() &&
+    someDate.getMonth() == today.getMonth() &&
+    someDate.getFullYear() == today.getFullYear()
+  ) {
+    FormattedDate = "Today";
+  } else if (
+    someDate.getDate() == yesterday.getDate() &&
+    someDate.getMonth() == yesterday.getMonth() &&
+    someDate.getFullYear() == yesterday.getFullYear()
+  ) {
+    FormattedDate = "Yesterday";
+  } else {
+    FormattedDate = `${getWeekDay(someDate)}, ${getMonth(
+      someDate
+    )} ${getformatDay(someDate)} `;
+  }
+  // return Today, yesterday, "Monday, May 20th"
+  return FormattedDate;
+}
+
+function getWeekDay(date) {
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thrusday",
+    "Friday",
+    "Saturday"
+  ];
+
+  return days[date.getDay()];
+}
+
+function getMonth(date) {
+  let months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+
+  return months[date.getMonth()];
+}
+
+function getformatDay(date) {
+  let ordinals = [
+    "",
+    "st",
+    "nd",
+    "rd",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "st",
+    "nd",
+    "rd",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "th",
+    "st"
+  ];
+
+  return `${date.getDate()}${ordinals[date.getDate()]}`;
 }
