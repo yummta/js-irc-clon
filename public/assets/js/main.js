@@ -98,9 +98,7 @@ socket.addEventListener("message", event => {
   }</span>&gt;  ${messageData.text}`;
 
   //move scroll at the end
-  document.getElementById(
-    "js-messages-list"
-  ).scrollTop = document.getElementById("js-messages-list").scrollHeight;
+  lastLine();
   let lsData = localStorage.getItem("data");
   let data = JSON.parse(lsData);
   pushingData(messageData.text, data, messageData.user, messageData.date);
@@ -121,12 +119,8 @@ btn.addEventListener("click", () => {
       date: date
     })
   );
-
   //move scroll at the end
-  document.getElementById(
-    "js-messages-list"
-  ).scrollTop = document.getElementById("js-messages-list").scrollHeight;
-
+  lastLine();
   $inputUser.value = "";
   $inputUser.focus();
 });
