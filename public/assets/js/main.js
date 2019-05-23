@@ -1,5 +1,62 @@
 const $buttonLogin = document.getElementById("js-button-loggin");
 const $inputUsername = document.getElementById("js-input-username");
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+];
+const ordinals = [
+  "",
+  "st",
+  "nd",
+  "rd",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "st",
+  "nd",
+  "rd",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "th",
+  "st"
+];
 
 $buttonLogin.addEventListener("click", login);
 
@@ -11,6 +68,19 @@ function login() {
     console.log(`[Save username ${username} in localStorage]`);
   }
 }
+
+// localStorage.setItem("userChannels", JSON.stringify(["english", "varios", "forobardo"]))
+function renderUserChanels() {
+  const userChannels = localStorage.getItem("userChannels");
+  const arrUserChannels = JSON.parse(userChannels);
+  let htmlUserChannels = "";
+  arrUserChannels.forEach(channelName => {
+    htmlUserChannels += `<li>${channelName}</li>`;
+  });
+  $listUserChannels.innerHTML = htmlUserChannels;
+}
+
+renderUserChanels();
 
 let channels = { general: { name: "general" } };
 let userChannels = ["general"];
@@ -43,9 +113,9 @@ function changeActiveChannel(channelName) {
 
 //new Date(year, month, date, hours, minutes, seconds, ms)
 function formatAMPM(date) {
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var ampm = hours >= 12 ? "pm" : "am";
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let ampm = hours >= 12 ? "pm" : "am";
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -54,7 +124,7 @@ function formatAMPM(date) {
 }
 
 function formatdate(someDate) {
-  let FormattedDate = "nada";
+  let FormattedDate = "";
   let today = new Date();
   let yesterday = new Date();
   yesterday.setDate(today.getDate() - 1);
@@ -81,73 +151,13 @@ function formatdate(someDate) {
 }
 
 function getWeekDay(date) {
-  let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thrusday",
-    "Friday",
-    "Saturday"
-  ];
-
   return days[date.getDay()];
 }
 
 function getMonth(date) {
-  let months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
-  ];
-
   return months[date.getMonth()];
 }
 
 function getformatDay(date) {
-  let ordinals = [
-    "",
-    "st",
-    "nd",
-    "rd",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "st",
-    "nd",
-    "rd",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "th",
-    "st"
-  ];
-
   return `${date.getDate()}${ordinals[date.getDate()]}`;
 }
