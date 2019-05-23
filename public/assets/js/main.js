@@ -1,5 +1,10 @@
 const $buttonLogin = document.getElementById("js-button-loggin");
 const $inputUsername = document.getElementById("js-input-username");
+const $buttonCreateChannel = document.getElementById(
+  "js-button-create-channel"
+);
+const $inputChannel = document.getElementById("js-input-channel");
+const $listUserChannels = document.getElementById("js-list-user-channels");
 const days = [
   "Sunday",
   "Monday",
@@ -69,6 +74,7 @@ function login() {
   }
 }
 
+$buttonCreateChannel.addEventListener("click", handleCreation);
 // localStorage.setItem("userChannels", JSON.stringify(["english", "varios", "forobardo"]))
 function renderUserChanels() {
   const userChannels = localStorage.getItem("userChannels");
@@ -85,6 +91,14 @@ renderUserChanels();
 let channels = { general: { name: "general" } };
 let userChannels = ["general"];
 let activeChannel = channels["general"];
+
+function handleCreation() {
+  event.preventDefault();
+  const storeChannelCreated = createChannel($inputChannel.value);
+  if (storeChannelCreated) {
+    localStorage.setItem("channels", JSON.stringify(storeChannelCreated));
+  }
+}
 
 function createChannel(channelName) {
   const channelCreated = { channelName: { name: channelName } };
