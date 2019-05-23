@@ -15,28 +15,28 @@ function login() {
           messages: []
         }
       }
-    }
+    };
     localStorage.setItem("data", JSON.stringify(newDataUser));
     window.location.replace("/main");
-  };
+  }
 }
 
 function isUser() {
-  return !!localStorage.getItem("data")
+  return !!localStorage.getItem("data");
 }
 
 function isInPath(param) {
-  return window.location.pathname == param
+  return window.location.pathname == param;
 }
 
-if ( isUser() ) {
-  if ( isInPath('/') ) {
-    window.location.replace("/main")
+if (isUser()) {
+  if (isInPath("/")) {
+    window.location.replace("/main");
   }
 } else {
-  if ( isInPath('/') ) {
+  if (isInPath("/")) {
     $buttonLogin.addEventListener("click", login);
   } else {
-    window.location.replace("/")
+    window.location.replace("/");
   }
 }
