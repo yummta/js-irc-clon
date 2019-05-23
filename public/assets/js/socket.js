@@ -1,13 +1,5 @@
-let socket = new WebSocket("ws://192.168.86.115:1234");
+let socket = new WebSocket("ws://localhost:3000");
 //const socket = new WebSocket("ws://localhost:1234");
-socket.addEventListener("open", function(event) {
-  console.log("Connected to server");
-});
-
-socket.addEventListener("close", () => {
-  alert("Connection closed");
-});
-
 pushingData = (text, obj, user) => {
   obj.message.general.messages.push({
     text,
@@ -16,24 +8,36 @@ pushingData = (text, obj, user) => {
   });
 };
 
-getUser = obj => {
-  return obj.user;
-};
-
 let chat = document.getElementById("chat");
 let btn = document.getElementById("btn");
 
+document.addEventListener("DOMContentLoaded", function() {
+  let local_storage = localStorage.getItem("data");
+  let data = JSON.parse(local_storage);
+
+  if (typeof local_storage !== "object") {
+    data.message.general.messages.map(value => {
+      let item = document.createElement("li");
+      chat.appendChild(item).innerHTML += ` ${value.Author} : ${value.text} - ${
+        value.date
+      }`;
+    });
+  }
+});
+
 socket.addEventListener("message", event => {
   let item = document.createElement("li");
-  chat.appendChild(item).innerHTML += "YOU :" + event.data + "<br>";
+  let date = new Date();
+  let user = document.getElementById("user").value;
+  chat.appendChild(item).innerHTML += ` ${user} : ${event.data} - ${date}`;
 });
 
 btn.addEventListener("click", () => {
   let text = document.getElementById("text").value;
   let user = document.getElementById("user").value;
   let local_storage = localStorage.getItem("data");
+  let data = JSON.parse(local_storage);
   socket.send(text);
-
   let obj = {
     user: user,
     channel: ["general", "codeable"],
@@ -53,7 +57,6 @@ btn.addEventListener("click", () => {
   if (typeof local_storage == "object") {
     localStorage.setItem("data", JSON.stringify(obj));
   } else {
-    let data = JSON.parse(local_storage);
     pushingData(text, data, user);
     localStorage.setItem("data", JSON.stringify(data));
   }
