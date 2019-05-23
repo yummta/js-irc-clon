@@ -39,7 +39,7 @@ function handleCreation() {
   event.preventDefault();
   const storeChannelCreated = createChannel($inputChannel.value);
   if (storeChannelCreated) {
-    localStorage.setItem("channel", JSON.stringify(storeChannelCreated));
+    localStorage.setItem("channels", JSON.stringify(storeChannelCreated));
   }
 }
 
