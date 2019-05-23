@@ -63,3 +63,11 @@ btn.addEventListener("click", () => {
 });
 
 // socket.close(1000, "Not required anymore");
+
+{
+  /* <input type="text" name="text" id="text" />
+    <input type="text" name="user" id="user" />
+    <button id="btn">Enviar</button>
+    <div id="chat"></div>
+    <script src="assets/js/socket.js"></script> */
+}
