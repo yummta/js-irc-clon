@@ -1,12 +1,10 @@
 const $buttonLogin = document.getElementById("js-button-loggin");
 const $inputUsername = document.getElementById("js-input-username");
-<<<<<<< HEAD
 const $buttonCreateChannel = document.getElementById(
   "js-button-create-channel"
 );
 const $inputChannel = document.getElementById("js-input-channel");
 const $listUserChannels = document.getElementById("js-list-user-channels");
-=======
 const days = [
   "Sunday",
   "Monday",
@@ -64,7 +62,6 @@ const ordinals = [
   "th",
   "st"
 ];
->>>>>>> 9875a48b0f27efd35fea830877932c1fb878243c
 
 $buttonLogin.addEventListener("click", login);
 
