@@ -20,46 +20,49 @@ const $inputChannel = document.getElementById("js-input-channel");
 
 $buttonCreateChannel.addEventListener("click", handleCreation);
 
-let channels = { general: { name: "general" } };
-let userChannels = ["general"];
-let activeChannel = channels["general"];
-
 function handleCreation() {
   event.preventDefault();
-  const storeChannelCreated = createChannel($inputChannel.value);
-  if (storeChannelCreated) {
-    localStorage.setItem("channels", JSON.stringify(storeChannelCreated));
-  }
+  createChannel($inputChannel.value);
 }
 
 function createChannel(channelName) {
-  const channelCreated = { channelName: { name: channelName } };
-  const channelExists = channels.hasOwnProperty(channelName);
-  if (!channelExists) {
-    channels[channelName] = channelCreated.channelName;
-    joinChannel(channelName);
-    changeActiveChannel(channelName);
-    return channels;
+  let data = localStorage.getItem("data");
+  let jsonData = JSON.parse(data);
+
+  if (!jsonData.ircChannels.includes(channelName)) {
+    jsonData.ircChannels.push(channelName);
+    jsonData.userChannels.push(channelName);
+    jsonData.ircMessages[channelName] = { messages: [] };
+    localStorage.setItem("data", JSON.stringify(jsonData));
+
+    let $userChannels = document.getElementById("user_channels");
+    let $channel = document.createElement("li");
+    let $channelChild = $userChannels.appendChild($channel);
+    $channelChild.innerHTML = channelName;
+    pushingIrcChannels(channelName, "uno");
+  } else {
+    alert("Ya existe");
   }
+  // joinChannel(channelName);
 }
 
-function joinChannel(channelName) {
-  if (!userChannels.includes(channelName)) {
-    userChannels.push(channelName);
-    return userChannels;
-  }
-}
+// function joinChannel(channelName) {
+//   if (!userChannels.includes(channelName)) {
+//     userChannels.push(channelName);
+//     return userChannels;
+//   }
+// }
 
-function changeActiveChannel(channelName) {
-  const channelExists = userChannels.includes(channelName);
-  if (channelExists) {
-    return (activeChannel = channels[channelName]);
-  }
-}
+// function changeActiveChannel(channelName) {
+//   const channelExists = userChannels.includes(channelName);
+//   if (channelExists) {
+//     return (activeChannel = channels[channelName]);
+//   }
+// }
 
 //Socket Chat
 pushingData = (text, obj, user, date) => {
-  obj.message.general.messages.push({
+  obj.ircMessages.general.messages.push({
     text,
     date,
     Author: user
@@ -67,21 +70,29 @@ pushingData = (text, obj, user, date) => {
 };
 
 let btn = document.getElementById("user_message");
-console.log(btn);
 let chat = document.getElementById("messages");
 
 socket.addEventListener("open", () => {
   let local_storage = localStorage.getItem("data");
   let data = JSON.parse(local_storage);
+  let userChannels = document.getElementById("user_channels");
 
   if (typeof local_storage !== "object") {
-    data.message.general.messages.map(value => {
+    data.ircMessages.general.messages.map(value => {
       let item = document.createElement("li");
       chat.appendChild(item).innerHTML += ` ${value.Author} : ${value.text} - ${
         value.date
       }`;
     });
   }
+
+  data.userChannels.forEach(element => {
+    let channel = document.createElement("li");
+    let channelChild = userChannels.appendChild(channel);
+    channelChild.innerHTML += element;
+  });
+
+  pushingIrcChannels(data, "muchos");
 });
 
 socket.addEventListener("message", event => {
@@ -95,6 +106,7 @@ socket.addEventListener("message", event => {
   let data = JSON.parse(local_storage);
   pushingData(message_data.text, data, message_data.user, message_data.date);
   localStorage.setItem("data", JSON.stringify(data));
+  //Adding user channels
 });
 
 btn.addEventListener("click", () => {
@@ -110,3 +122,19 @@ btn.addEventListener("click", () => {
     })
   );
 });
+
+pushingIrcChannels = (data, cantidad) => {
+  let $ircChannels = document.getElementById("irc-channels");
+
+  if (cantidad == "muchos") {
+    data.ircChannels.forEach(element => {
+      let $channel = document.createElement("li");
+      let $channelChild = $ircChannels.appendChild($channel);
+      $channelChild.innerHTML += element;
+    });
+  } else {
+    let $channel = document.createElement("li");
+    let $channelChild = $ircChannels.appendChild($channel);
+    $channelChild.innerHTML = data;
+  }
+};

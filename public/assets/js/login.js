@@ -5,10 +5,11 @@ let socket = new WebSocket("ws://localhost:3000");
 function login() {
   event.preventDefault();
   const username = $inputUsername.value;
-  let new_data_user = {
+  let newDataUser = {
     user: username,
-    channel: ["general"],
-    message: {
+    userChannels: ["general"],
+    ircChannels: ["general"],
+    ircMessages: {
       general: {
         messages: []
       }
@@ -16,7 +17,7 @@ function login() {
   };
 
   if (username) {
-    localStorage.setItem("data", JSON.stringify(new_data_user));
+    localStorage.setItem("data", JSON.stringify(newDataUser));
     window.location.replace("/main");
   }
 }
