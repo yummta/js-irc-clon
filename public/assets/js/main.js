@@ -111,8 +111,8 @@ socket.addEventListener("message", event => {
 btn.addEventListener("click", () => {
   event.preventDefault();
   let $inputUser = document.getElementById("js-input-user-message");
-  let local_storage = localStorage.getItem("data");
-  let data = JSON.parse(local_storage);
+  let lsData = localStorage.getItem("data");
+  let data = JSON.parse(lsData);
   let date = new Date();
   socket.send(
     JSON.stringify({
