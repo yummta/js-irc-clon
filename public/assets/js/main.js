@@ -69,8 +69,8 @@ pushingData = (text, obj, user, date) => {
   });
 };
 
-let btn = document.getElementById("user_message");
-let chat = document.getElementById("messages");
+let btn = document.getElementById("js-add-user-message");
+let chat = document.getElementById("js-messages-view");
 
 socket.addEventListener("open", () => {
   let local_storage = localStorage.getItem("data");
@@ -79,10 +79,13 @@ socket.addEventListener("open", () => {
 
   if (typeof local_storage !== "object") {
     data.ircMessages.general.messages.map(value => {
+      value.date = new Date(value.date); //become string to date
       let item = document.createElement("li");
-      chat.appendChild(item).innerHTML += ` ${value.Author} : ${value.text} - ${
+      chat.appendChild(item).innerHTML += `[${formatAMPM(
         value.date
-      }`;
+      )}]  &lt;<span class="li-identify">@</span><span class="username">${
+        value.Author
+      }</span>&gt;  ${value.text}`;
     });
   }
 
@@ -99,9 +102,11 @@ socket.addEventListener("message", event => {
   let item = document.createElement("li");
   let date = new Date();
   let message_data = JSON.parse(event.data);
-  chat.appendChild(item).innerHTML += ` ${message_data.user} : ${
-    message_data.text
-  } - ${date}`;
+  chat.appendChild(item).innerHTML += `[${formatAMPM(
+    date
+  )}]  &lt;<span class="li-identify">@</span><span class="username">${
+    message_data.user
+  }</span>&gt;  ${message_data.text}`;
   let local_storage = localStorage.getItem("data");
   let data = JSON.parse(local_storage);
   pushingData(message_data.text, data, message_data.user, message_data.date);
@@ -110,17 +115,20 @@ socket.addEventListener("message", event => {
 });
 
 btn.addEventListener("click", () => {
-  let text = document.getElementById("text").value;
+  event.preventDefault();
+  let text = document.getElementById("js-input-user-message");
   let local_storage = localStorage.getItem("data");
   let data = JSON.parse(local_storage);
   let date = new Date();
   socket.send(
     JSON.stringify({
-      text,
+      text: text.value,
       user: data.user,
-      date
+      date: date
     })
   );
+  text.value = "";
+  text.focus();
 });
 
 pushingIrcChannels = (data, cantidad) => {

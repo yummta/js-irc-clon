@@ -32,18 +32,28 @@ body {
 .createChannel {
   display: flex;
   flex-direction: column;
-
   width: 90%;
 }
 .messagesList {
   padding-left: 0.5em;
   border-right: 0.5em;
-  display: flex;
   border-bottom: 3px solid black;
 }
 .messages {
   position: relative;
-  overflow-x: hidden;
+  overflow-x: auto;
+}
+.ulList {
+  list-style-type: none;
+  padding: 0.3em;
+  margin: 0;
+}
+
+.li-identify {
+  color: #999999;
+}
+.username {
+  text-decoration: underline;
 }
 .usersList {
   border-left: 3px solid black;
