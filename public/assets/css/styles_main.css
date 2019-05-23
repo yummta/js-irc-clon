@@ -24,8 +24,17 @@ body {
   background-color: #ffffff;
   border-right: 3px solid black;
   padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 0.3em;
 }
+.createChannel {
+  display: flex;
+  flex-direction: column;
 
+  width: 90%;
+}
 .messagesList {
   padding-left: 0.5em;
   border-right: 0.5em;
@@ -49,7 +58,6 @@ body {
 
 .formInput {
   padding-left: 0.5em;
-  display: flex;
 }
 .keyboardInput {
   width: 70%;

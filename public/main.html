@@ -14,11 +14,13 @@
   <body>
     <header id="user-header" class="header"><h1>IRC</h1></header>
     <section id="channel-list" class="channelList">
-      <p>Canal 1</p>
-      <p>Canal 2</p>
-      <p>Canal 3</p>
-      <p>Canal 4</p>
-      <form action="createChannel">
+      <div id="channels" class="channels">
+        <p>Canal 1</p>
+        <p>Canal 2</p>
+        <p>Canal 3</p>
+        <p>Canal 4</p>
+      </div>
+      <form action="createChannel" class="createChannel">
         <label for="channels">Channel</label>
         <button id="js-button-create-channel" class="btn">
           Create Channel
