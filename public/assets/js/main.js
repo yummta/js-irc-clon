@@ -56,7 +56,8 @@ pushingData = (text, obj, user, date) => {
 };
 
 let btn = document.getElementById("js-add-user-message");
-let chat = document.getElementById("js-messages-view");
+let chat = document.getElementById("messages");
+
 socket.addEventListener("open", () => {
   let lsData = localStorage.getItem("data");
   let data = JSON.parse(lsData);
