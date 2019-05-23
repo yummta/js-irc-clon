@@ -74,10 +74,7 @@ socket.addEventListener("open", () => {
     });
   }
   //move scroll at the end
-  document.getElementById(
-    "js-messages-list"
-  ).scrollTop = document.getElementById("js-messages-list").scrollHeight;
-
+  lastLine();
   data.userChannels.forEach(element => {
     let channel = document.createElement("li");
     let channelChild = userChannels.appendChild(channel);
