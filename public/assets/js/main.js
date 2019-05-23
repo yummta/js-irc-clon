@@ -1,5 +1,6 @@
 const $buttonLogin = document.getElementById("js-button-loggin");
 const $inputUsername = document.getElementById("js-input-username");
+const $listUserChannels = document.getElementById("js-list-user-channels");
 
 $buttonLogin.addEventListener("click", login);
 
@@ -11,6 +12,19 @@ function login() {
     console.log(`[Save username ${username} in localStorage]`);
   }
 }
+
+// localStorage.setItem("userChannels", JSON.stringify(["english", "varios", "forobardo"]))
+function renderUserChanels () {
+  const userChannels = localStorage.getItem("userChannels");
+  const arrUserChannels = JSON.parse(userChannels);
+  let htmlUserChannels = ""
+  arrUserChannels.forEach( (channelName) => {
+    htmlUserChannels += `<li>${channelName}</li>`
+  } )
+  $listUserChannels.innerHTML = htmlUserChannels
+}
+
+renderUserChanels()
 
 let channels = { general: { name: "general" } };
 let userChannels = ["general"];
