@@ -39,26 +39,12 @@ function createChannel(channelName) {
     let $channel = document.createElement("li");
     let $channelChild = $userChannels.appendChild($channel);
     $channelChild.innerHTML = channelName;
-    pushingIrcChannels(channelName, "uno");
+    pushingIrcChannels(channelName);
   } else {
     alert("Ya existe");
   }
   // joinChannel(channelName);
 }
-
-// function joinChannel(channelName) {
-//   if (!userChannels.includes(channelName)) {
-//     userChannels.push(channelName);
-//     return userChannels;
-//   }
-// }
-
-// function changeActiveChannel(channelName) {
-//   const channelExists = userChannels.includes(channelName);
-//   if (channelExists) {
-//     return (activeChannel = channels[channelName]);
-//   }
-// }
 
 //Socket Chat
 pushingData = (text, obj, user, date) => {
@@ -73,11 +59,11 @@ let btn = document.getElementById("js-add-user-message");
 let chat = document.getElementById("js-messages-view");
 
 socket.addEventListener("open", () => {
-  let local_storage = localStorage.getItem("data");
-  let data = JSON.parse(local_storage);
+  let lsData = localStorage.getItem("data");
+  let data = JSON.parse(lsData);
   let userChannels = document.getElementById("user_channels");
 
-  if (typeof local_storage !== "object") {
+  if (typeof lsData !== "object") {
     data.ircMessages.general.messages.map(value => {
       value.date = new Date(value.date); //become string to date
       let item = document.createElement("li");
@@ -95,21 +81,21 @@ socket.addEventListener("open", () => {
     channelChild.innerHTML += element;
   });
 
-  pushingIrcChannels(data, "muchos");
+  pushingIrcChannels(data);
 });
 
 socket.addEventListener("message", event => {
   let item = document.createElement("li");
   let date = new Date();
-  let message_data = JSON.parse(event.data);
+  let messageData = JSON.parse(event.data);
   chat.appendChild(item).innerHTML += `[${formatAMPM(
     date
   )}]  &lt;<span class="li-identify">@</span><span class="username">${
-    message_data.user
-  }</span>&gt;  ${message_data.text}`;
-  let local_storage = localStorage.getItem("data");
-  let data = JSON.parse(local_storage);
-  pushingData(message_data.text, data, message_data.user, message_data.date);
+    messageData.user
+  }</span>&gt;  ${messageData.text}`;
+  let lsData = localStorage.getItem("data");
+  let data = JSON.parse(lsData);
+  pushingData(messageData.text, data, messageData.user, messageData.date);
   localStorage.setItem("data", JSON.stringify(data));
   //Adding user channels
 });
@@ -117,8 +103,8 @@ socket.addEventListener("message", event => {
 btn.addEventListener("click", () => {
   event.preventDefault();
   let text = document.getElementById("js-input-user-message");
-  let local_storage = localStorage.getItem("data");
-  let data = JSON.parse(local_storage);
+  let lsData = localStorage.getItem("data");
+  let data = JSON.parse(lsData);
   let date = new Date();
   socket.send(
     JSON.stringify({
@@ -131,10 +117,10 @@ btn.addEventListener("click", () => {
   text.focus();
 });
 
-pushingIrcChannels = (data, cantidad) => {
+pushingIrcChannels = data => {
   let $ircChannels = document.getElementById("irc-channels");
 
-  if (cantidad == "muchos") {
+  if (typeof data == "object") {
     data.ircChannels.forEach(element => {
       let $channel = document.createElement("li");
       let $channelChild = $ircChannels.appendChild($channel);
