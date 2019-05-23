@@ -68,7 +68,6 @@ pushingData = (text, obj, user, date) => {
 
 let btn = document.getElementById("js-add-user-message");
 let chat = document.getElementById("js-messages-view");
-
 socket.addEventListener("open", () => {
   let local_storage = localStorage.getItem("data");
   let data = JSON.parse(local_storage);
@@ -84,6 +83,10 @@ socket.addEventListener("open", () => {
       }</span>&gt;  ${value.text}`;
     });
   }
+  //move scroll at the end
+  document.getElementById(
+    "js-messages-list"
+  ).scrollTop = document.getElementById("js-messages-list").scrollHeight;
 });
 
 socket.addEventListener("message", event => {
@@ -95,6 +98,11 @@ socket.addEventListener("message", event => {
   )}]  &lt;<span class="li-identify">@</span><span class="username">${
     message_data.user
   }</span>&gt;  ${message_data.text}`;
+
+  //move scroll at the end
+  document.getElementById(
+    "js-messages-list"
+  ).scrollTop = document.getElementById("js-messages-list").scrollHeight;
   let local_storage = localStorage.getItem("data");
   let data = JSON.parse(local_storage);
   pushingData(message_data.text, data, message_data.user, message_data.date);
@@ -103,17 +111,17 @@ socket.addEventListener("message", event => {
 
 btn.addEventListener("click", () => {
   event.preventDefault();
-  let text = document.getElementById("js-input-user-message");
+  let $inputUser = document.getElementById("js-input-user-message");
   let local_storage = localStorage.getItem("data");
   let data = JSON.parse(local_storage);
   let date = new Date();
   socket.send(
     JSON.stringify({
-      text: text.value,
+      text: $inputUser.value,
       user: data.user,
       date: date
     })
   );
-  text.value = "";
-  text.focus();
+  $inputUser.value = "";
+  $inputUser.focus();
 });
