@@ -1,4 +1,3 @@
-let socket = new WebSocket("ws://localhost:3000");
 //const socket = new WebSocket("ws://localhost:1234");
 pushingData = (text, obj, user) => {
   obj.message.general.messages.push({
@@ -11,7 +10,7 @@ pushingData = (text, obj, user) => {
 let chat = document.getElementById("chat");
 let btn = document.getElementById("btn");
 
-document.addEventListener("DOMContentLoaded", function() {
+socket.addEventListener("open", () => {
   let local_storage = localStorage.getItem("data");
   let data = JSON.parse(local_storage);
 
@@ -38,21 +37,6 @@ btn.addEventListener("click", () => {
   let local_storage = localStorage.getItem("data");
   let data = JSON.parse(local_storage);
   socket.send(text);
-  let obj = {
-    user: user,
-    channel: ["general", "codeable"],
-    message: {
-      general: {
-        messages: [
-          {
-            text,
-            date: new Date(),
-            Author: user
-          }
-        ]
-      }
-    }
-  };
 
   if (typeof local_storage == "object") {
     localStorage.setItem("data", JSON.stringify(obj));
