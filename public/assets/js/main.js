@@ -60,11 +60,10 @@ pushingData = (text, obj, user, date) => {
 
 let btn = document.getElementById("js-add-user-message");
 let chat = document.getElementById("js-messages-view");
-<<<<<<< HEAD
-=======
 
 //LOAD ALL USER DATA IN LOCAL STORAGE
->>>>>>> Share created channel to all user
+let chat = document.getElementById("messages");
+
 socket.addEventListener("open", () => {
   //Getting dom elements and storare data
   let lsData = localStorage.getItem("data");
@@ -83,13 +82,10 @@ socket.addEventListener("open", () => {
       }</span>&gt;  ${value.text}`;
     });
   }
-<<<<<<< HEAD
   //move scroll at the end
   lastLine();
-=======
 
   //Load user channels
->>>>>>> Share created channel to all user
   data.userChannels.forEach(element => {
     let channel = document.createElement("li");
     let channelChild = userChannels.appendChild(channel);
