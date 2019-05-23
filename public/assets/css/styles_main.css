@@ -45,6 +45,17 @@ body {
   position: relative;
   overflow-x: hidden;
 }
+.ulList {
+  list-style-type: none;
+  padding: 0.3em;
+}
+
+.li-identify {
+  color: #999999;
+}
+.username {
+  text-decoration: underline;
+}
 .usersList {
   border-left: 3px solid black;
   border-bottom: 3px solid black;
