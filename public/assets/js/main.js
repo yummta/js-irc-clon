@@ -46,6 +46,20 @@ function createChannel(channelName) {
   // joinChannel(channelName);
 }
 
+// function joinChannel(channelName) {
+//   if (!userChannels.includes(channelName)) {
+//     userChannels.push(channelName);
+//     return userChannels;
+//   }
+// }
+
+// function changeActiveChannel(channelName) {
+//   const channelExists = userChannels.includes(channelName);
+//   if (channelExists) {
+//     return (activeChannel = channels[channelName]);
+//   }
+// }
+
 //Socket Chat
 pushingData = (text, obj, user, date) => {
   obj.ircMessages.general.messages.push({
@@ -125,7 +139,6 @@ btn.addEventListener("click", () => {
 
 pushingIrcChannels = data => {
   let $ircChannels = document.getElementById("irc-channels");
-
   if (typeof data == "object") {
     data.ircChannels.forEach(element => {
       let $channel = document.createElement("li");
