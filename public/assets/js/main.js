@@ -66,8 +66,9 @@ pushingData = (text, obj, user, date) => {
   });
 };
 
-let btn = document.getElementById("btn");
-let chat = document.getElementById("chat");
+let btn = document.getElementById("user_message");
+console.log(btn);
+let chat = document.getElementById("messages");
 
 socket.addEventListener("open", () => {
   let local_storage = localStorage.getItem("data");
