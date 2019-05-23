@@ -104,7 +104,6 @@ socket.addEventListener("message", event => {
 btn.addEventListener("click", () => {
   event.preventDefault();
   let text = document.getElementById("js-input-user-message");
-  console.log(text);
   let local_storage = localStorage.getItem("data");
   let data = JSON.parse(local_storage);
   let date = new Date();
