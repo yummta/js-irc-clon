@@ -36,54 +36,12 @@
         <input id="js-input-channel" type="text" />
       </form>
     </section>
-    <section id="messages-list" class="messagesList">
-      <div class="messages">
-        <p>
-          User 1: Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Deleniti consequatur commodi deserunt saepe similique expedita minima
-          delectus ut voluptas. Facilis asperiores placeat odio veritatis nemo
-          quibusdam ut unde eum aliquam?
-        </p>
-        <p>
-          User 2: Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Deleniti consequatur commodi deserunt saepe similique expedita minima
-          delectus ut voluptas. Facilis asperiores placeat odio veritatis nemo
-          quibusdam ut unde eum aliquam?
-        </p>
-        <p>
-          User 3: Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Deleniti consequatur commodi deserunt saepe similique expedita minima
-          delectus ut voluptas. Facilis asperiores placeat odio veritatis nemo
-          quibusdam ut unde eum aliquam?
-        </p>
-        <p>
-          User 4: Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Deleniti consequatur commodi deserunt saepe similique expedita minima
-          delectus ut voluptas. Facilis asperiores placeat odio veritatis nemo
-          quibusdam ut unde eum aliquam?
-        </p>
-        <p>
-          User 5: Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Deleniti consequatur commodi deserunt saepe similique expedita minima
-          delectus ut voluptas. Facilis asperiores placeat odio veritatis nemo
-          quibusdam ut unde eum aliquam?
-        </p>
-        <p>
-          User 6: Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Deleniti consequatur commodi deserunt saepe similique expedita minima
-          delectus ut voluptas. Facilis asperiores placeat odio veritatis nemo
-          quibusdam ut unde eum aliquam?
-        </p>
-        <p>
-          User 7: Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Deleniti consequatur commodi deserunt saepe similique expedita minima
-          delectus ut voluptas. Facilis asperiores placeat odio veritatis nemo
-          quibusdam ut unde eum aliquam?
-        </p>
-      </div>
+    <section id="js-messages-list" class="messagesList messages">
+      <ul id="js-messages-view" class="ulList">
+        <!-- chat messages formatted-->
+      </ul>
     </section>
-
-    <section id="users-list" class="usersList">
+    <section id="js-users-list" class="usersList">
       <p>User 1</p>
       <p>User 2</p>
       <p>User 3</p>
@@ -91,8 +49,17 @@
 
     <footer class="footer">
       <form class="formInput">
-        <input class="keyboardInput" placeholder="chat here!" />
-        <button id="user-message" class="btn">Enter</button>
+        <input
+          id="js-input-user-message"
+          aria-label="Chat here"
+          class="keyboardInput"
+          placeholder="Chat here!"
+          autocomplete="off"
+          autofocus
+        />
+        <button id="js-add-user-message" class="btn">
+          Enter
+        </button>
       </form>
     </footer>
     <script src="assets/js/format-date.js"></script>
