@@ -14,19 +14,18 @@
   <body>
     <header id="user-header" class="header"><h1>IRC</h1></header>
     <section id="channel-list" class="channelList">
-      <div id="user-channels" class="channels">
+      <div class="channels">
         <h3>User Channels</h3>
-        <p class="Canal">Canal 1</p>
-        <p class="Canal">Canal 2</p>
-        <p class="Canal">Canal 3</p>
-        <p class="Canal">Canal 4</p>
+        <ul id="user_channels">
+          <li class="canal">Canal 1</li>
+          <li class="canal">Canal 2</li>
+          <li class="canal">Canal 3</li>
+          <li class="canal">Canal 4</li>
+        </ul>
       </div>
-      <div id="irc-channels" class="channels">
+      <div class="channels">
         <h3>IRC Channels</h3>
-        <p>Canal 1</p>
-        <p>Canal 2</p>
-        <p>Canal 3</p>
-        <p>Canal 4</p>
+        <ul id="irc-channels"></ul>
       </div>
       <form action="createChannel" class="createChannel">
         <label for="channels">Channel</label>
@@ -50,6 +49,7 @@
     <footer class="footer">
       <form class="formInput">
         <input
+          type="text"
           id="js-input-user-message"
           aria-label="Chat here"
           class="keyboardInput"
@@ -62,6 +62,7 @@
         </button>
       </form>
     </footer>
+    <script src="assets/js/helpers.js"></script>
     <script src="assets/js/format-date.js"></script>
     <script src="assets/js/login.js"></script>
     <script src="assets/js/main.js"></script>
