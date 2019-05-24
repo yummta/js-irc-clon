@@ -55,23 +55,35 @@ pushingData = (text, obj, user, date) => {
   });
 };
 
-let btn = document.getElementById("js-add-user-message");
-let chat = document.getElementById("js-messages-view");
+const btn = document.getElementById("js-add-user-message");
+const chat = document.getElementById("js-messages-view");
 
 socket.addEventListener("open", () => {
   let lsData = localStorage.getItem("data");
   let data = JSON.parse(lsData);
   let userChannels = document.getElementById("user_channels");
-
   if (typeof lsData !== "object") {
-    data.ircMessages.general.messages.map(value => {
+    let day = null
+
+    data.ircMessages.general.messages.forEach(value => {
       value.date = new Date(value.date); //become string to date
+
+      let currentDay = value.date.getDate();
+
+      if ( currentDay !== day ) {
+        let separator = document.createElement("span");
+        separator.className = "center";
+        chat.appendChild(separator).innerHTML = `${formatdate(value.date)}`;
+        day = currentDay;
+      }
+
       let item = document.createElement("li");
       chat.appendChild(item).innerHTML += `[${formatAMPM(
         value.date
       )}]  &lt;<span class="li-identify">@</span><span class="username">${
         value.Author
       }</span>&gt;  ${value.text}`;
+
     });
   }
 
