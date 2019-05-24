@@ -108,4 +108,5 @@ body {
 
 .channel.-active {
   color: red;
+  cursor: pointer;
 }
