@@ -73,6 +73,8 @@ socket.addEventListener("open", () => {
     data.ircMessages.general.messages.map(value => {
       value.date = new Date(value.date); //become string to date
       let item = document.createElement("li");
+      item.style.color = "#5f5f5f"; // old text new style
+      item.style.fontStyle = "italic";
       chat.appendChild(item).innerHTML += `[${formatAMPM(
         value.date
       )}]  &lt;<span class="li-identify">@</span><span class="username">${
@@ -80,8 +82,8 @@ socket.addEventListener("open", () => {
       }</span>&gt;  ${value.text}`;
     });
   }
-
-  //Load user channels
+  //move scroll at the end
+  lastLine();
   data.userChannels.forEach(element => {
     let channel = document.createElement("li");
     let channelChild = userChannels.appendChild(channel);
@@ -127,20 +129,22 @@ socket.addEventListener("message", event => {
 //ACTION DO THE BUTTON OF CHAT
 btn.addEventListener("click", () => {
   event.preventDefault();
-  let text = document.getElementById("js-input-user-message");
+  let $inputUser = document.getElementById("js-input-user-message");
   let lsData = localStorage.getItem("data");
   let data = JSON.parse(lsData);
   let date = new Date();
   socket.send(
     JSON.stringify({
-      text: text.value,
+      text: $inputUser.value,
       user: data.user,
       date: date,
       ircChannels: data.ircChannels
     })
   );
-  text.value = "";
-  text.focus();
+  //move scroll at the end
+  lastLine();
+  $inputUser.value = "";
+  $inputUser.focus();
 });
 
 pushingIrcChannels = data => {
