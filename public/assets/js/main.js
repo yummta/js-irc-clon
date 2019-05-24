@@ -63,9 +63,6 @@ pushingData = (text, obj, user, date) => {
 };
 
 let btn = document.getElementById("js-add-user-message");
-let chat = document.getElementById("js-messages-view");
-
-//LOAD ALL USER DATA IN LOCAL STORAGE
 let chat = document.getElementById("messages");
 
 //LOAD ALL USER DATA IN LOCAL STORAGE
@@ -109,7 +106,7 @@ socket.addEventListener("message", event => {
     let data = JSON.parse(lsData);
     let getIrcChannels = data.ircChannels;
     getIrcChannels.push(messageData.newChannel);
-    data.ircChannels = [...new Set(a)];
+    data.ircChannels = [...new Set(getIrcChannels)];
     localStorage.setItem("data", JSON.stringify(data));
     pushingIrcChannels(data);
   } else {
