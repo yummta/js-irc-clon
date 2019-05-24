@@ -183,12 +183,12 @@ pushingIrcChannels = data => {
 };
 
 // listar canales activos
-const $listaMensajes = document.getElementById("js-messages-view");
-document.querySelectorAll(".canal").forEach(function(p) {
+const $listActiveChannels = document.getElementById("js-messages-view");
+document.querySelectorAll(".channel").forEach(function(p) {
   p.addEventListener("click", () => {
-    $listaMensajes.innerHTML = "";
+    $listActiveChannels.innerHTML = "";
     const $li = document.createElement("li");
     $li.innerHTML = p.textContent;
-    $listaMensajes.appendChild($li);
+    $listActiveChannels.appendChild($li);
   });
 });
