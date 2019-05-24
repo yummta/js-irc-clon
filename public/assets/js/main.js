@@ -22,7 +22,11 @@ $buttonCreateChannel.addEventListener("click", handleCreation);
 
 function handleCreation() {
   event.preventDefault();
-  createChannel($inputChannel.value);
+  if (!$inputChannel.value.trim()) {
+    alert("Please enter a channel's name");
+  } else {
+    createChannel($inputChannel.value);
+  }
 }
 
 function createChannel(channelName) {
@@ -40,9 +44,12 @@ function createChannel(channelName) {
     let $channelChild = $userChannels.appendChild($channel);
     $channelChild.innerHTML = channelName;
     pushingIrcChannels(channelName);
+    socket.send(JSON.stringify({ newChannel: channelName }));
   } else {
-    alert("Ya existe");
+    alert("This channel already exists");
   }
+  $inputChannel.value = "";
+  $inputChannel.focus();
   // joinChannel(channelName);
 }
 
@@ -57,15 +64,18 @@ pushingData = (text, obj, user, date) => {
 
 let btn = document.getElementById("js-add-user-message");
 let chat = document.getElementById("js-messages-view");
+
+//LOAD ALL USER DATA IN LOCAL STORAGE
 socket.addEventListener("open", () => {
+  //Getting dom elements and storare data
   let lsData = localStorage.getItem("data");
   let data = JSON.parse(lsData);
   let userChannels = document.getElementById("user_channels");
 
+  //Load local storage messages
   if (typeof lsData !== "object") {
     data.ircMessages.general.messages.map(value => {
-      value.date = new Date(value.date); //become from string to date
-
+      value.date = new Date(value.date); //become string to date
       let item = document.createElement("li");
       item.style.color = "#5f5f5f"; // old text new style
       item.style.fontStyle = "italic";
@@ -83,29 +93,44 @@ socket.addEventListener("open", () => {
     let channelChild = userChannels.appendChild(channel);
     channelChild.innerHTML += element;
   });
-
+  //Load IRC Channles
   pushingIrcChannels(data);
 });
 
+//DO SOMETHING WHEN SOMEONE SEND SOMETHING TO THE SOCKET
 socket.addEventListener("message", event => {
-  let item = document.createElement("li");
-  let date = new Date();
   let messageData = JSON.parse(event.data);
-  chat.appendChild(item).innerHTML += `[${formatAMPM(
-    date
-  )}]  &lt;<span class="li-identify">@</span><span class="username">${
-    messageData.user
-  }</span>&gt;  ${messageData.text}`;
 
-  //move scroll at the end
-  lastLine();
-  let lsData = localStorage.getItem("data");
-  let data = JSON.parse(lsData);
-  pushingData(messageData.text, data, messageData.user, messageData.date);
-  localStorage.setItem("data", JSON.stringify(data));
-  //Adding user channels
+  if (messageData.newChannel) {
+    let lsData = localStorage.getItem("data");
+    let data = JSON.parse(lsData);
+    let getIrcChannels = data.ircChannels;
+    getIrcChannels.push(messageData.newChannel);
+    data.ircChannels = [...new Set(getIrcChannels)];
+    localStorage.setItem("data", JSON.stringify(data));
+    pushingIrcChannels(data);
+  } else {
+    let item = document.createElement("li");
+    let date = new Date();
+    chat.appendChild(item).innerHTML += `[${formatAMPM(
+      date
+    )}]  &lt;<span class="li-identify">@</span><span class="username">${
+      messageData.user
+    }</span>&gt;  ${messageData.text}`;
+    lastLine();
+    let lsData = localStorage.getItem("data");
+    let data = JSON.parse(lsData);
+    pushingData(messageData.text, data, messageData.user, messageData.date);
+    //Adding user channels
+    let getIrcChannels = data.ircChannels;
+    let newIrcChannels = getIrcChannels.concat(messageData.ircChannels);
+    data.ircChannels = [...new Set(newIrcChannels)];
+    localStorage.setItem("data", JSON.stringify(data));
+    pushingIrcChannels(data);
+  }
 });
 
+//ACTION DO THE BUTTON OF CHAT
 btn.addEventListener("click", () => {
   event.preventDefault();
   let $inputUser = document.getElementById("js-input-user-message");
@@ -116,7 +141,8 @@ btn.addEventListener("click", () => {
     JSON.stringify({
       text: $inputUser.value,
       user: data.user,
-      date: date
+      date: date,
+      ircChannels: data.ircChannels
     })
   );
   //move scroll at the end
@@ -129,6 +155,10 @@ pushingIrcChannels = data => {
   let $ircChannels = document.getElementById("irc-channels");
 
   if (typeof data == "object") {
+    while ($ircChannels.firstChild) {
+      $ircChannels.removeChild($ircChannels.firstChild);
+    }
+
     data.ircChannels.forEach(element => {
       let $channel = document.createElement("li");
       let $channelChild = $ircChannels.appendChild($channel);
