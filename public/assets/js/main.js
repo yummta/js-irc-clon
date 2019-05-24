@@ -84,8 +84,11 @@ socket.addEventListener("open", () => {
       }</span>&gt;  ${value.text}`;
     });
   }
+<<<<<<< HEAD
   //move scroll at the end
   lastLine();
+=======
+>>>>>>> 9ed05d5d3bd882fab08ea2faea0763b78733d5f7
 
   //Load user channels
   data.userChannels.forEach(element => {
@@ -121,6 +124,10 @@ socket.addEventListener("message", event => {
     let data = JSON.parse(lsData);
     pushingData(messageData.text, data, messageData.user, messageData.date);
     //Adding user channels
+<<<<<<< HEAD
+=======
+    console.log(event);
+>>>>>>> 9ed05d5d3bd882fab08ea2faea0763b78733d5f7
     let a = data.ircChannels;
     let b = a.concat(messageData.ircChannels);
     data.ircChannels = [...new Set(b)];
@@ -132,7 +139,11 @@ socket.addEventListener("message", event => {
 //ACTION DO THE BUTTON OF CHAT
 btn.addEventListener("click", () => {
   event.preventDefault();
+<<<<<<< HEAD
   let $inputUser = document.getElementById("js-input-user-message");
+=======
+  let text = document.getElementById("js-input-user-message");
+>>>>>>> 9ed05d5d3bd882fab08ea2faea0763b78733d5f7
   let lsData = localStorage.getItem("data");
   let data = JSON.parse(lsData);
   let date = new Date();
@@ -152,6 +163,10 @@ btn.addEventListener("click", () => {
 
 pushingIrcChannels = data => {
   let $ircChannels = document.getElementById("irc-channels");
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9ed05d5d3bd882fab08ea2faea0763b78733d5f7
   if (typeof data == "object") {
     while ($ircChannels.firstChild) {
       $ircChannels.removeChild($ircChannels.firstChild);
