@@ -24,6 +24,14 @@ document.querySelector("body").addEventListener("click", function(event) {
   }
 });
 
+function showActiveChannel() {
+  let activeChannel = parseLocalStorage().activeChannel;
+  let $currentChannel = $listUserChannels.querySelector(
+    `[data-name="${activeChannel}"]`
+  );
+  $currentChannel.classList.add("-active");
+}
+
 function getMessageStorage(nameChannel) {
   let jsonData = parseLocalStorage();
   return jsonData.ircMessages[nameChannel].messages;
@@ -107,7 +115,6 @@ socket.addEventListener("open", () => {
   //Getting dom elements and storare data
   let lsData = localStorage.getItem("data");
   let data = JSON.parse(lsData);
-
   //Load local storage messages
   if (lsData !== null) {
     let day = null;
@@ -140,6 +147,7 @@ socket.addEventListener("open", () => {
   });
   //Load IRC Channles
   showIrcChannels(data);
+  showActiveChannel();
 });
 
 //DO SOMETHING WHEN SOMEONE SEND SOMETHING TO THE SOCKET
