@@ -22,7 +22,11 @@ $buttonCreateChannel.addEventListener("click", handleCreation);
 
 function handleCreation() {
   event.preventDefault();
-  createChannel($inputChannel.value);
+  if (!$inputChannel.value.trim()) {
+    alert("Ingrese nombre de channel");
+  } else {
+    createChannel($inputChannel.value);
+  }
 }
 
 function createChannel(channelName) {
@@ -117,7 +121,6 @@ socket.addEventListener("message", event => {
     let data = JSON.parse(lsData);
     pushingData(messageData.text, data, messageData.user, messageData.date);
     //Adding user channels
-    console.log(event);
     let a = data.ircChannels;
     let b = a.concat(messageData.ircChannels);
     data.ircChannels = [...new Set(b)];
