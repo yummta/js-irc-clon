@@ -10,6 +10,7 @@ function login() {
       user: username,
       userChannels: ["general"],
       ircChannels: ["general"],
+      activeChannel: "general",
       ircMessages: {
         general: {
           messages: []
