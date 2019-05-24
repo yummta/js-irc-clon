@@ -64,8 +64,11 @@ socket.addEventListener("open", () => {
 
   if (typeof lsData !== "object") {
     data.ircMessages.general.messages.map(value => {
-      value.date = new Date(value.date); //become string to date
+      value.date = new Date(value.date); //become from string to date
+
       let item = document.createElement("li");
+      item.style.color = "#5f5f5f"; // old text new style
+      item.style.fontStyle = "italic";
       chat.appendChild(item).innerHTML += `[${formatAMPM(
         value.date
       )}]  &lt;<span class="li-identify">@</span><span class="username">${

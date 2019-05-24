@@ -42,6 +42,7 @@ body {
 .messages {
   position: relative;
   overflow-x: auto;
+  word-wrap: break-word;
 }
 .ulList {
   list-style-type: none;
