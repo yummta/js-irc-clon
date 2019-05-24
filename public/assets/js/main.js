@@ -64,6 +64,7 @@ let chat = document.getElementById("js-messages-view");
 //LOAD ALL USER DATA IN LOCAL STORAGE
 let chat = document.getElementById("messages");
 
+//LOAD ALL USER DATA IN LOCAL STORAGE
 socket.addEventListener("open", () => {
   //Getting dom elements and storare data
   let lsData = localStorage.getItem("data");
