@@ -74,14 +74,14 @@ socket.addEventListener("open", () => {
 
   //Load local storage messages
   if (typeof lsData !== "object") {
-    let day = null
+    let day = null;
 
     data.ircMessages.general.messages.forEach(value => {
       value.date = new Date(value.date); //become string to date
 
       let currentDay = value.date.getDate();
 
-      if ( currentDay !== day ) {
+      if (currentDay !== day) {
         let separator = document.createElement("span");
         separator.className = "center";
         chat.appendChild(separator).innerHTML = `${formatdate(value.date)}`;
@@ -89,13 +89,12 @@ socket.addEventListener("open", () => {
       }
 
       let item = document.createElement("li");
-      item.classList.add('look-disabled')
+      item.classList.add("look-disabled");
       chat.appendChild(item).innerHTML += `[${formatAMPM(
         value.date
       )}]  &lt;<span class="li-identify">@</span><span class="username">${
         value.Author
       }</span>&gt;  ${value.text}`;
-
     });
   }
   //move scroll at the end
@@ -182,3 +181,14 @@ pushingIrcChannels = data => {
     $channelChild.innerHTML = data;
   }
 };
+
+// listar canales activos
+const $listActiveChannels = document.getElementById("js-messages-view");
+document.querySelectorAll(".channel").forEach(function(p) {
+  p.addEventListener("click", () => {
+    $listActiveChannels.innerHTML = "";
+    const $li = document.createElement("li");
+    $li.innerHTML = p.textContent;
+    $listActiveChannels.appendChild($li);
+  });
+});
