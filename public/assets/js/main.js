@@ -104,9 +104,15 @@ socket.addEventListener("message", event => {
   if (messageData.newChannel) {
     let lsData = localStorage.getItem("data");
     let data = JSON.parse(lsData);
+<<<<<<< HEAD
     let getIrcChannels = data.ircChannels;
     getIrcChannels.push(messageData.newChannel);
     data.ircChannels = [...new Set(getIrcChannels)];
+=======
+    let a = data.ircChannels;
+    a.push(messageData.newChannel);
+    data.ircChannels = [...new Set(a)];
+>>>>>>> 80fcc2b2b5c9ca1f6a489a7b4234fe9f03e56612
     localStorage.setItem("data", JSON.stringify(data));
     pushingIrcChannels(data);
   } else {
@@ -121,9 +127,15 @@ socket.addEventListener("message", event => {
     let data = JSON.parse(lsData);
     pushingData(messageData.text, data, messageData.user, messageData.date);
     //Adding user channels
+<<<<<<< HEAD
     let getIrcChannels = data.ircChannels;
     let newIrcChannels = getIrcChannels.concat(messageData.ircChannels);
     data.ircChannels = [...new Set(newIrcChannels)];
+=======
+    let a = data.ircChannels;
+    let b = a.concat(messageData.ircChannels);
+    data.ircChannels = [...new Set(b)];
+>>>>>>> 80fcc2b2b5c9ca1f6a489a7b4234fe9f03e56612
     localStorage.setItem("data", JSON.stringify(data));
     pushingIrcChannels(data);
   }
