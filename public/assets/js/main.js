@@ -22,7 +22,11 @@ $buttonCreateChannel.addEventListener("click", handleCreation);
 
 function handleCreation() {
   event.preventDefault();
-  createChannel($inputChannel.value);
+  if (!$inputChannel.value.trim()) {
+    alert("Please enter a channel's name");
+  } else {
+    createChannel($inputChannel.value);
+  }
 }
 
 function createChannel(channelName) {
@@ -42,7 +46,7 @@ function createChannel(channelName) {
     pushingIrcChannels(channelName);
     socket.send(JSON.stringify({ newChannel: channelName }));
   } else {
-    alert("Ya existe");
+    alert("This channel already exists");
   }
   $inputChannel.value = "";
   $inputChannel.focus();
@@ -100,9 +104,9 @@ socket.addEventListener("message", event => {
   if (messageData.newChannel) {
     let lsData = localStorage.getItem("data");
     let data = JSON.parse(lsData);
-    let a = data.ircChannels;
-    a.push(messageData.newChannel);
-    data.ircChannels = [...new Set(a)];
+    let getIrcChannels = data.ircChannels;
+    getIrcChannels.push(messageData.newChannel);
+    data.ircChannels = [...new Set(getIrcChannels)];
     localStorage.setItem("data", JSON.stringify(data));
     pushingIrcChannels(data);
   } else {
@@ -118,10 +122,9 @@ socket.addEventListener("message", event => {
     let data = JSON.parse(lsData);
     pushingData(messageData.text, data, messageData.user, messageData.date);
     //Adding user channels
-    console.log(event);
-    let a = data.ircChannels;
-    let b = a.concat(messageData.ircChannels);
-    data.ircChannels = [...new Set(b)];
+    let getIrcChannels = data.ircChannels;
+    let newIrcChannels = getIrcChannels.concat(messageData.ircChannels);
+    data.ircChannels = [...new Set(newIrcChannels)];
     localStorage.setItem("data", JSON.stringify(data));
     pushingIrcChannels(data);
   }
