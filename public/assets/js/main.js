@@ -113,6 +113,7 @@ socket.addEventListener("message", event => {
     )}]  &lt;<span class="li-identify">@</span><span class="username">${
       messageData.user
     }</span>&gt;  ${messageData.text}`;
+    lastLine();
     let lsData = localStorage.getItem("data");
     let data = JSON.parse(lsData);
     pushingData(messageData.text, data, messageData.user, messageData.date);
