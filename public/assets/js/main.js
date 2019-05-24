@@ -103,7 +103,7 @@ socket.addEventListener("message", event => {
 
 btn.addEventListener("click", () => {
   event.preventDefault();
-  let text = document.getElementById("js-input-user-message");
+  let text = document.getElementByName("js-input-user-message");
   let local_storage = localStorage.getItem("data");
   let data = JSON.parse(local_storage);
   let date = new Date();
@@ -117,3 +117,40 @@ btn.addEventListener("click", () => {
   text.value = "";
   text.focus();
 });
+
+// listar canales activos
+
+const listaMensajes = document.getElementById("js-messages-list");
+
+eventListeners();
+
+function eventListeners() {
+  document
+    .getElementById("Canal1")
+    .addEventListener("click", listarCanalActivo);
+}
+
+function listarCanalActivo() {
+  const canal = document.getElementById("Canal1");
+  console.log(canal.value);
+  const li = document.createElement("li");
+  li.innerHTML = canal;
+  listaMensajes.appendChild(li);
+}
+
+// // ----
+// var elementosP = document.getElementsByTagName("p");
+// var segundoParrafo = document.getElementById("segundo"); //<p></p>
+
+// // 1. crear elemento
+// var elemento = document.createElement("h2");
+// // 2. crear un nodo de texto
+// var contenido = document.createTextNode("este es nuestro titular");
+// // 3. anadir el nodo de texto al elemento
+// elemento.appendChild(contenido);
+// // 4. agregar atributos al elemento
+// elemento.setAttribute("align", "center");
+// // 5. agregar el elemento al documento
+// document.getElementById("subtitulo").appendChild(elemento);
+// //<div></div>
+// // document.body.appendChild(elemento);
