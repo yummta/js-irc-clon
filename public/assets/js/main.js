@@ -9,16 +9,31 @@ document.querySelector("body").addEventListener("click", function(event) {
   if (event.target.classList.contains("channel")) {
     let activeChannel = event.target.dataset.name;
     let data = parseLocalStorage();
-    data.activeChannel = activeChannel;
+    data.activeChannel = activeChannel; //save active channel
     localStorage.setItem("data", JSON.stringify(data));
     let $allButtonChannels = Array.from(
       document.getElementsByClassName("channel")
     );
+    let $allButtonIrcChannels = Array.from(
+      document.getElementsByClassName("irc")
+    );
+
     $allButtonChannels.forEach(button => {
       button.classList.remove("-active");
     });
 
-    event.target.classList.add("-active");
+    if (!event.target.classList.contains("irc")) {
+      event.target.classList.add("-active");
+    } else {
+      if (!data.userChannels.includes(event.target.dataset.name)) {
+        data.userChannels.push(event.target.dataset.name);
+        data.ircMessages[event.target.dataset.name] = { messages: [] };
+        localStorage.setItem("data", JSON.stringify(data));
+        renderNewChannel(event.target.dataset.name);
+        showActiveChannel();
+      }
+    }
+
     let messages = getMessageStorage(activeChannel);
     renderMessages(messages);
   }
@@ -36,7 +51,7 @@ function getMessageStorage(nameChannel) {
   let jsonData = parseLocalStorage();
   return jsonData.ircMessages[nameChannel].messages;
 }
-
+//inject chat messages from localstorage to html
 function renderMessages(messages) {
   $messagesView.innerHTML = "";
   messages.forEach(message => {
@@ -68,13 +83,12 @@ function handleCreation() {
 }
 
 function createChannel(channelName) {
-  let data = localStorage.getItem("data");
-  let jsonData = JSON.parse(data);
+  let jsonData = parseLocalStorage();
 
   if (!jsonData.ircChannels.includes(channelName)) {
     updateLocalStorageNewChannel(jsonData, channelName);
     renderNewChannel(channelName);
-    pushingIrcChannels(channelName);
+    showIrcChannels(channelName);
     socket.send(JSON.stringify({ newChannel: channelName }));
   } else {
     alert("This channel already exists");
@@ -114,10 +128,13 @@ const chat = document.getElementById("js-messages-view");
 socket.addEventListener("open", () => {
   //Getting dom elements and storare data
   let lsData = localStorage.getItem("data");
-  let data = JSON.parse(lsData);
+  let data = parseLocalStorage();
   //Load local storage messages
   if (lsData !== null) {
     let day = null;
+    if (!data.ircMessages[data.activeChannel]) {
+      updateLocalStorageNewChannel(data, data.activeChannel);
+    }
     data.ircMessages[data.activeChannel].messages.forEach(value => {
       value.date = new Date(value.date); //become string to date
       let currentDay = value.date.getDate();
@@ -131,9 +148,9 @@ socket.addEventListener("open", () => {
       item.classList.add("look-disabled");
       chat.appendChild(item).innerHTML += `[${formatAMPM(
         value.date
-      )}]  &lt;<span class="li-identify">@</span><span class="username">${
-        value.Author
-      }</span>&gt;  ${value.text}`;
+      )}]  &lt;@<span class="username">${value.Author}</span>&gt;  ${
+        value.text
+      }`;
     });
   }
   //move scroll at the end
@@ -167,9 +184,9 @@ socket.addEventListener("message", event => {
     let date = new Date();
     chat.appendChild(item).innerHTML += `[${formatAMPM(
       date
-    )}]  &lt;<span class="li-identify">@</span><span class="username">${
-      messageData.user
-    }</span>&gt;  ${messageData.text}`;
+    )}]  &lt;@<span class="username">${messageData.user}</span>&gt;  ${
+      messageData.text
+    }`;
     lastLine();
 
     saveMessages(
@@ -184,6 +201,15 @@ socket.addEventListener("message", event => {
     data.ircChannels = [...new Set(newIrcChannels)];
     localStorage.setItem("data", JSON.stringify(data));
     showIrcChannels(data);
+  } else {
+    saveMessages(
+      messageData.text,
+      data,
+      messageData.user,
+      messageData.date,
+      messageData.current
+    );
+    localStorage.setItem("data", JSON.stringify(data));
   }
 });
 
@@ -209,6 +235,7 @@ btn.addEventListener("click", () => {
   $inputUser.focus();
 });
 
+///inject html to irc channel
 showIrcChannels = data => {
   let $ircChannels = document.getElementById("irc-channels");
 
@@ -217,11 +244,15 @@ showIrcChannels = data => {
 
     data.ircChannels.forEach(element => {
       let $channel = document.createElement("li");
+      $channel.setAttribute("data-name", element);
+      $channel.classList.add("channel", "irc");
       let $channelChild = $ircChannels.appendChild($channel);
       $channelChild.innerHTML += element;
     });
   } else {
     let $channel = document.createElement("li");
+    $channel.setAttribute("data-name", data);
+    $channel.classList.add("channel", "irc");
     let $channelChild = $ircChannels.appendChild($channel);
     $channelChild.innerHTML = data;
   }

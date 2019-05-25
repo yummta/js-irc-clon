@@ -1,6 +1,12 @@
 const $inputUsername = document.getElementById("js-input-username");
 const $buttonLogin = document.getElementById("js-button-loggin");
-const socket = new WebSocket("ws://localhost:3000");
+const socket = new WebSocket(socketUrl());
+
+function socketUrl() {
+  return location.hostname == "localhost"
+    ? "ws://localhost:3000"
+    : `ws://${location.hostname}:${location.port}`;
+}
 
 function login() {
   event.preventDefault();
