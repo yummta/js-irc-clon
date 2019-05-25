@@ -1,0 +1,29 @@
+.window{
+  border: 3px solid var(--c-black);
+  border-radius: 16px;
+  box-shadow: 6px 6px 0 var(--c-black);
+  overflow: hidden;
+}
+
+.window-dots{
+  position: relative;
+}
+
+.window-dots:before,
+.window-dots:after{
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 3px solid var(--c-black);
+
+}
+
+.window-dots:after{
+  left: 38px;
+}

@@ -1,0 +1,16 @@
+.heading-1{
+  font-family: var(--ff-bold);
+  font-size: var(--fs-bigger);
+  margin-bottom: 0.5em;
+}
+
+.heading-2{
+  font-family: var(--ff-bold);
+  font-size: var(--fs-big);
+  margin-bottom: 0.5em;
+}
+.heading-3{
+  font-size: var(--fs-regular);
+  font-family: var(--ff-bold);
+  margin-bottom: 0.5em;
+}

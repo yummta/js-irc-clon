@@ -1,0 +1,10 @@
+.header{
+  position: relative;
+  border-bottom: 3px solid var(--c-black);
+}
+
+.header .title{
+  margin: 0;
+  font-size: 1em;
+  font-family: var(--ff-bold);
+}

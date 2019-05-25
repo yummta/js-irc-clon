@@ -1,0 +1,22 @@
+.chat{
+  position: relative
+}
+
+.chat .list-messages{
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 88px;
+  top: 16px;
+  overflow: auto;
+  padding-bottom: 16px
+}
+
+.chat .send-message{
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 16px;
+}
+
+
