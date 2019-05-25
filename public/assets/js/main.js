@@ -60,7 +60,7 @@ function renderMessages(messages) {
     item.classList.add("look-disabled");
     $messagesView.appendChild(item).innerHTML += `[${formatAMPM(
       message.date
-    )}]  &lt;@<span class="username">${message.Author}</span>&gt;  ${
+    )}]  &lt;@<span class="username"> linea 63${message.Author}</span>&gt;  ${
       message.text
     }`;
   });
@@ -113,11 +113,19 @@ function updateLocalStorageNewChannel(jsonData, channelName) {
 }
 
 //Socket Chat
-saveMessages = (text, obj, user, date, channel) => {
-  obj.ircMessages[channel].messages.push({
+saveMessages = (
+  text,
+  objectStorage,
+  user,
+  date,
+  channel,
+  newMessagesStatus
+) => {
+  objectStorage.ircMessages[channel].messages.push({
     text,
     date,
-    Author: user
+    Author: user,
+    newMessagesStatus
   });
 };
 
@@ -148,7 +156,7 @@ socket.addEventListener("open", () => {
       item.classList.add("look-disabled");
       chat.appendChild(item).innerHTML += `[${formatAMPM(
         value.date
-      )}]  &lt;@<span class="username">${value.Author}</span>&gt;  ${
+      )}]  &lt;@<span class="username">linea151${value.Author}</span>&gt;  ${
         value.text
       }`;
     });
@@ -184,7 +192,7 @@ socket.addEventListener("message", event => {
     let date = new Date();
     chat.appendChild(item).innerHTML += `[${formatAMPM(
       date
-    )}]  &lt;@<span class="username">${messageData.user}</span>&gt;  ${
+    )}]  &lt;@<span class="username">linea187${messageData.user}</span>&gt;  ${
       messageData.text
     }`;
     lastLine();
@@ -194,7 +202,8 @@ socket.addEventListener("message", event => {
       data,
       messageData.user,
       messageData.date,
-      messageData.current
+      messageData.current,
+      false
     );
     //Adding user channels
     let newIrcChannels = getIrcChannels.concat(messageData.ircChannels);
@@ -202,15 +211,18 @@ socket.addEventListener("message", event => {
     localStorage.setItem("data", JSON.stringify(data));
     showIrcChannels(data);
   } else {
-    console.log("DATA de otro canal");
-    saveMessages(
-      messageData.text,
-      data,
-      messageData.user,
-      messageData.date,
-      messageData.current
-    );
-    localStorage.setItem("data", JSON.stringify(data));
+    if (data) {
+      saveMessages(
+        messageData.text,
+        data,
+        messageData.user,
+        messageData.date,
+        messageData.current,
+        messageData.newMessagesStatus,
+        true
+      );
+      localStorage.setItem("data", JSON.stringify(data));
+    }
   }
 });
 
@@ -227,7 +239,8 @@ btn.addEventListener("click", () => {
       user: data.user,
       date: date,
       ircChannels: data.ircChannels,
-      current: data.activeChannel
+      current: data.activeChannel,
+      newMessagesStatus: true
     })
   );
   //move scroll at the end
