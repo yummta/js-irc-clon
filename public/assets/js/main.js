@@ -126,6 +126,11 @@ const chat = document.getElementById("js-messages-view");
 
 //LOAD ALL USER DATA IN LOCAL STORAGE
 socket.addEventListener("open", () => {
+  //Ask permision to nofication
+  Notification.requestPermission().then(value => {
+    localStorage.setItem("notification", value);
+  });
+
   //Getting dom elements and storare data
   let lsData = localStorage.getItem("data");
   let data = parseLocalStorage();
@@ -209,6 +214,13 @@ socket.addEventListener("message", event => {
       messageData.date,
       messageData.current
     );
+    //Notication
+    if (localStorage.getItem("notification") == "granted") {
+      let body = {
+        body: `${messageData.user} says: ${messageData.text}`
+      };
+      new Notification(`${messageData.current}`, body);
+    }
     localStorage.setItem("data", JSON.stringify(data));
   }
 });
