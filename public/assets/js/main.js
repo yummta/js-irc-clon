@@ -202,7 +202,6 @@ socket.addEventListener("message", event => {
     localStorage.setItem("data", JSON.stringify(data));
     showIrcChannels(data);
   } else {
-    console.log("DATA de otro canal");
     saveMessages(
       messageData.text,
       data,
