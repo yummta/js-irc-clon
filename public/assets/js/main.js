@@ -114,11 +114,14 @@ function updateLocalStorageNewChannel(jsonData, channelName) {
 
 //Socket Chat
 saveMessages = (text, obj, user, date, channel) => {
-  obj.ircMessages[channel].messages.push({
-    text,
-    date,
-    Author: user
-  });
+  let data = parseLocalStorage();
+  if (Object.keys(data.ircChannels).includes(channel)) {
+    obj.ircMessages[channel].messages.push({
+      text,
+      date,
+      Author: user
+    });
+  }
 };
 
 const btn = document.getElementById("js-add-user-message");
