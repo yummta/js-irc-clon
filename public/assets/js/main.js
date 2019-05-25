@@ -14,11 +14,29 @@ document.querySelector("body").addEventListener("click", function(event) {
     let $allButtonChannels = Array.from(
       document.getElementsByClassName("channel")
     );
+    let $allButtonIrcChannels = Array.from(
+      document.getElementsByClassName("irc")
+    );
+
     $allButtonChannels.forEach(button => {
       button.classList.remove("-active");
     });
 
-    event.target.classList.add("-active");
+    if (!event.target.classList.contains("irc")) {
+      event.target.classList.add("-active");
+    } else {
+      let realButtonChannels = $allButtonChannels.filter(button => {
+        return button.dataset.name == event.target.dataset.name;
+      });
+
+      realButtonChannels[0].classList.add("-active");
+      if (!data.userChannels.includes(event.target.dataset.name)) {
+        data.userChannels.push(event.target.dataset.name);
+        data.ircMessages[event.target.dataset.name] = { messages: [] };
+        localStorage.setItem("data", JSON.stringify(data));
+      }
+    }
+
     let messages = getMessageStorage(activeChannel);
     renderMessages(messages);
   }
@@ -68,13 +86,12 @@ function handleCreation() {
 }
 
 function createChannel(channelName) {
-  let data = localStorage.getItem("data");
-  let jsonData = JSON.parse(data);
+  let jsonData = parseLocalStorage();
 
   if (!jsonData.ircChannels.includes(channelName)) {
     updateLocalStorageNewChannel(jsonData, channelName);
     renderNewChannel(channelName);
-    pushingIrcChannels(channelName);
+    showIrcChannels(channelName);
     socket.send(JSON.stringify({ newChannel: channelName }));
   } else {
     alert("This channel already exists");
@@ -114,7 +131,7 @@ const chat = document.getElementById("js-messages-view");
 socket.addEventListener("open", () => {
   //Getting dom elements and storare data
   let lsData = localStorage.getItem("data");
-  let data = JSON.parse(lsData);
+  let data = parseLocalStorage();
   //Load local storage messages
   if (lsData !== null) {
     let day = null;
@@ -217,11 +234,15 @@ showIrcChannels = data => {
 
     data.ircChannels.forEach(element => {
       let $channel = document.createElement("li");
+      $channel.setAttribute("data-name", element);
+      $channel.classList.add("channel", "irc");
       let $channelChild = $ircChannels.appendChild($channel);
       $channelChild.innerHTML += element;
     });
   } else {
     let $channel = document.createElement("li");
+    $channel.setAttribute("data-name", data);
+    $channel.classList.add("channel", "irc");
     let $channelChild = $ircChannels.appendChild($channel);
     $channelChild.innerHTML = data;
   }
