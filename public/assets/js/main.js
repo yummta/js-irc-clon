@@ -173,6 +173,15 @@ socket.addEventListener("message", event => {
   let lsData = localStorage.getItem("data");
   let data = JSON.parse(lsData);
   let getIrcChannels = data.ircChannels;
+  //working on this mayra
+  // console.log(
+  //   "data.activeChannel",
+  //   data.activeChannel,
+  //   "data.userChannel",
+  //   data.userChannel,
+  //   "current",
+  //   messageData.current
+  // );
 
   if (messageData.newChannel) {
     getIrcChannels.push(messageData.newChannel);
@@ -203,28 +212,22 @@ socket.addEventListener("message", event => {
     showIrcChannels(data);
   }
   //////
-  /////////
+  /////////working on this Mayra
   /////
   ///
-  console.log(
-    "data.activeChannel",
-    data.activeChannel,
-    "current",
-    message.Datacurrent
-  );
-  if (
-    data.userChannels.includes(messageData.current) &&
-    data.activeChannel != messageData.current
-  ) {
-    console.log("linea215", "current", messageData.current);
-    saveMessages(
-      messageData.text,
-      data,
-      messageData.user, //author
-      messageData.date,
-      messageData.current //current channel
-    );
-  }
+  // else if (
+  //   data.userChannels.includes(messageData.current) &&
+  //   data.activeChannel != messageData.current
+  // ) {
+  //   console.log("linea221", "current", messageData.current);
+  //   saveMessages(
+  //     messageData.text,
+  //     data,
+  //     messageData.user, //author
+  //     messageData.date,
+  //     messageData.current //current channel
+  //   );
+  // }
 });
 
 //ACTION DO THE BUTTON OF CHAT
