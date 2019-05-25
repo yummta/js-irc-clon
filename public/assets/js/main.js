@@ -148,9 +148,9 @@ socket.addEventListener("open", () => {
       item.classList.add("look-disabled");
       chat.appendChild(item).innerHTML += `[${formatAMPM(
         value.date
-      )}]  &lt;<span class="li-identify">@</span><span class="username">${
-        value.Author
-      }</span>&gt;  ${value.text}`;
+      )}]  &lt;@<span class="username">${value.Author}</span>&gt;  ${
+        value.text
+      }`;
     });
   }
   //move scroll at the end
