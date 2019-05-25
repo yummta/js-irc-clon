@@ -63,9 +63,9 @@ function renderMessages(messages) {
     item.classList.add("look-disabled");
     $messagesView.appendChild(item).innerHTML += `[${formatAMPM(
       message.date
-    )}]  &lt;<span class="li-identify">@</span><span class="username">${
-      message.Author
-    }</span>&gt;  ${message.text}`;
+    )}]  &lt;@<span class="username">${message.Author}</span>&gt;  ${
+      message.text
+    }`;
   });
 }
 

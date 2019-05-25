@@ -5,7 +5,7 @@ body {
   display: grid;
   grid-template: 10% 80% 10% / 20% 60% 20%;
   font-family: "Anonymous Pro", monospace;
-  background-color: #99b6d2;
+  background-color: #afc9f5;
   border: 3px solid black;
 }
 
@@ -50,9 +50,6 @@ body {
   margin: 0;
 }
 
-.li-identify {
-  color: #999999;
-}
 .username {
   text-decoration: underline;
 }
@@ -102,7 +99,7 @@ body {
 }
 
 .look-disabled {
-  color: #5f5f5f;
+  color: #3d3d3d;
   font-style: italic;
 }
 
