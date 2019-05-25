@@ -9,7 +9,7 @@ document.querySelector("body").addEventListener("click", function(event) {
   if (event.target.classList.contains("channel")) {
     let activeChannel = event.target.dataset.name;
     let data = parseLocalStorage();
-    data.activeChannel = activeChannel;
+    data.activeChannel = activeChannel; //save active channel
     localStorage.setItem("data", JSON.stringify(data));
     let $allButtonChannels = Array.from(
       document.getElementsByClassName("channel")
@@ -25,15 +25,12 @@ document.querySelector("body").addEventListener("click", function(event) {
     if (!event.target.classList.contains("irc")) {
       event.target.classList.add("-active");
     } else {
-      let realButtonChannels = $allButtonChannels.filter(button => {
-        return button.dataset.name == event.target.dataset.name;
-      });
-
-      realButtonChannels[0].classList.add("-active");
       if (!data.userChannels.includes(event.target.dataset.name)) {
         data.userChannels.push(event.target.dataset.name);
         data.ircMessages[event.target.dataset.name] = { messages: [] };
         localStorage.setItem("data", JSON.stringify(data));
+        renderNewChannel(event.target.dataset.name);
+        showActiveChannel();
       }
     }
 
@@ -54,7 +51,7 @@ function getMessageStorage(nameChannel) {
   let jsonData = parseLocalStorage();
   return jsonData.ircMessages[nameChannel].messages;
 }
-
+//inject chat messages from localstorage to html
 function renderMessages(messages) {
   $messagesView.innerHTML = "";
   messages.forEach(message => {
@@ -135,6 +132,9 @@ socket.addEventListener("open", () => {
   //Load local storage messages
   if (lsData !== null) {
     let day = null;
+    if (!data.ircMessages[data.activeChannel]) {
+      updateLocalStorageNewChannel(data, data.activeChannel);
+    }
     data.ircMessages[data.activeChannel].messages.forEach(value => {
       value.date = new Date(value.date); //become string to date
       let currentDay = value.date.getDate();
@@ -184,9 +184,9 @@ socket.addEventListener("message", event => {
     let date = new Date();
     chat.appendChild(item).innerHTML += `[${formatAMPM(
       date
-    )}]  &lt;<span class="li-identify">@</span><span class="username">${
-      messageData.user
-    }</span>&gt;  ${messageData.text}`;
+    )}]  &lt;@<span class="username">${messageData.user}</span>&gt;  ${
+      messageData.text
+    }`;
     lastLine();
 
     saveMessages(
@@ -201,6 +201,29 @@ socket.addEventListener("message", event => {
     data.ircChannels = [...new Set(newIrcChannels)];
     localStorage.setItem("data", JSON.stringify(data));
     showIrcChannels(data);
+  }
+  //////
+  /////////
+  /////
+  ///
+  console.log(
+    "data.activeChannel",
+    data.activeChannel,
+    "current",
+    message.Datacurrent
+  );
+  if (
+    data.userChannels.includes(messageData.current) &&
+    data.activeChannel != messageData.current
+  ) {
+    console.log("linea215", "current", messageData.current);
+    saveMessages(
+      messageData.text,
+      data,
+      messageData.user, //author
+      messageData.date,
+      messageData.current //current channel
+    );
   }
 });
 
@@ -226,6 +249,7 @@ btn.addEventListener("click", () => {
   $inputUser.focus();
 });
 
+///inject html to irc channel
 showIrcChannels = data => {
   let $ircChannels = document.getElementById("irc-channels");
 
