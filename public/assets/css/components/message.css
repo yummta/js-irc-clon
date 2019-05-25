@@ -1,0 +1,14 @@
+.message{
+  margin-bottom: 4px;
+}
+
+.message .username{
+  background-color: var(--c-blue);
+  padding: 2px 4px;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.message.look-disabled{
+  opacity: 0.55;
+}

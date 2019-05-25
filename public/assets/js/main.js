@@ -14,9 +14,6 @@ document.querySelector("body").addEventListener("click", function(event) {
     let $allButtonChannels = Array.from(
       document.getElementsByClassName("channel")
     );
-    let $allButtonIrcChannels = Array.from(
-      document.getElementsByClassName("irc")
-    );
 
     $allButtonChannels.forEach(button => {
       button.classList.remove("-active");
@@ -25,11 +22,12 @@ document.querySelector("body").addEventListener("click", function(event) {
     if (!event.target.classList.contains("irc")) {
       event.target.classList.add("-active");
     } else {
-      if (!data.userChannels.includes(event.target.dataset.name)) {
-        data.userChannels.push(event.target.dataset.name);
-        data.ircMessages[event.target.dataset.name] = { messages: [] };
+
+      if (!data.userChannels.includes(activeChannel)) {
+        data.userChannels.push(activeChannel);
+        data.ircMessages[activeChannel] = { messages: [] };
         localStorage.setItem("data", JSON.stringify(data));
-        renderNewChannel(event.target.dataset.name);
+        renderNewChannel(activeChannel);
         showActiveChannel();
       }
     }
@@ -57,12 +55,10 @@ function renderMessages(messages) {
   messages.forEach(message => {
     let item = document.createElement("li");
     message.date = new Date(message.date);
-    item.classList.add("look-disabled");
-    $messagesView.appendChild(item).innerHTML += `[${formatAMPM(
-      message.date
-    )}]  &lt;@<span class="username">${message.Author}</span>&gt;  ${
-      message.text
-    }`;
+    item.classList.add("look-disabled", "message");
+    let date = `[${formatAMPM(message.date)}]`;
+    let user = `<span class="username">@${message.Author}</span>`;
+    $messagesView.appendChild(item).innerHTML += `${date} ${user} ${message.text}`;
   });
 }
 
@@ -100,7 +96,7 @@ function createChannel(channelName) {
 function renderNewChannel(channelName) {
   let $channel = document.createElement("li");
   $channel.setAttribute("data-name", channelName);
-  $channel.classList.add("channel");
+  $channel.classList.add("channel", "item");
   $channel.innerText = channelName;
   $listUserChannels.appendChild($channel);
 }
@@ -122,7 +118,6 @@ saveMessages = (text, obj, user, date, channel) => {
 };
 
 const btn = document.getElementById("js-add-user-message");
-const chat = document.getElementById("js-messages-view");
 
 //LOAD ALL USER DATA IN LOCAL STORAGE
 socket.addEventListener("open", () => {
@@ -140,17 +135,16 @@ socket.addEventListener("open", () => {
       let currentDay = value.date.getDate();
       if (currentDay !== day) {
         let separator = document.createElement("span");
-        separator.className = "center";
-        chat.appendChild(separator).innerHTML = `${formatdate(value.date)}`;
+        separator.className = "center separator";
+        $messagesView.appendChild(separator).innerHTML = `${formatdate(value.date)}`;
         day = currentDay;
       }
       let item = document.createElement("li");
-      item.classList.add("look-disabled");
-      chat.appendChild(item).innerHTML += `[${formatAMPM(
-        value.date
-      )}]  &lt;@<span class="username">${value.Author}</span>&gt;  ${
-        value.text
-      }`;
+      item.classList.add("look-disabled", "message");
+      let date = `[${formatAMPM(value.date)}]`;
+      let user = `<span class="username">@${value.Author}</span>`;
+
+      $messagesView.appendChild(item).innerHTML += `${date} ${user} ${value.text}`;
     });
   }
   //move scroll at the end
@@ -158,7 +152,7 @@ socket.addEventListener("open", () => {
   data.userChannels.forEach(element => {
     let channel = document.createElement("li");
     channel.setAttribute("data-name", element);
-    channel.classList.add("channel");
+    channel.classList.add("channel", "item");
     let channelChild = $listUserChannels.appendChild(channel);
     channelChild.innerHTML += element;
   });
@@ -181,12 +175,12 @@ socket.addEventListener("message", event => {
     showIrcChannels(data);
   } else if (data.activeChannel == messageData.current) {
     let item = document.createElement("li");
-    let date = new Date();
-    chat.appendChild(item).innerHTML += `[${formatAMPM(
-      date
-    )}]  &lt;@<span class="username">${messageData.user}</span>&gt;  ${
-      messageData.text
-    }`;
+    item.classList.add("message");
+
+    let date = `[${formatAMPM(new Date())}]`;
+    let user = `<span class="username">@${messageData.user}</span>`;
+    $messagesView.appendChild(item).innerHTML += `${date} ${user} ${messageData.text}`;
+
     lastLine();
 
     saveMessages(

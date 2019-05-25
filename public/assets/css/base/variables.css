@@ -1,0 +1,22 @@
+:root{
+  /* colors */
+  --c-black: #34332F;
+  --c-red: #F7D9D5;
+  --c-green: #C4F1D8;
+  --c-blue: #D9EFFF;
+  --c-gray: #F5F5F5;
+  --c-yellow: #F9F3E5;
+  --c-gray-text: #8C8C8C;
+  --c-link: #4E72CD;
+  --c-backgorund: white;
+
+  /* font-size */
+  --fs-bigger: 28px;
+  --fs-big: 20px;
+  --fs-regular: 1em;
+  --fs-small: 14px;
+
+  /* font-family */
+  --ff-bold: 'jaldibold';
+  --ff-regular: 'jaldiregular';
+}
