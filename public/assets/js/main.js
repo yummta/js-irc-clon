@@ -22,16 +22,11 @@ document.querySelector("body").addEventListener("click", function(event) {
     if (!event.target.classList.contains("irc")) {
       event.target.classList.add("-active");
     } else {
-      let userButtonChannels = $allButtonChannels.filter(button => {
-        return button.dataset.name == activeChannel;
-      });
-      userButtonChannels[1].classList.add("-active");
-
-      if (!data.userChannels.includes(activeChannel)) {
-        data.userChannels.push(activeChannel);
-        data.ircMessages[activeChannel] = { messages: [] };
+      if (!data.userChannels.includes(event.target.dataset.name)) {
+        data.userChannels.push(event.target.dataset.name);
+        data.ircMessages[event.target.dataset.name] = { messages: [] };
         localStorage.setItem("data", JSON.stringify(data));
-        renderNewChannel(activeChannel);
+        renderNewChannel(event.target.dataset.name);
         showActiveChannel();
       }
     }
