@@ -22,6 +22,10 @@ document.querySelector("body").addEventListener("click", function(event) {
     if (!event.target.classList.contains("irc")) {
       event.target.classList.add("-active");
     } else {
+      let userButtonChannels = $allButtonChannels.filter(button => {
+        return button.dataset.name == activeChannel;
+      });
+      userButtonChannels[1].classList.add("-active");
 
       if (!data.userChannels.includes(activeChannel)) {
         data.userChannels.push(activeChannel);
