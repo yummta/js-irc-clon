@@ -124,6 +124,15 @@ saveMessages = (text, obj, user, date, channel) => {
   }
 };
 
+showNotification = messageData => {
+  if (localStorage.getItem("notification") == "granted" && !document.hidden) {
+    let body = {
+      body: `${messageData.user} says: ${messageData.text}`
+    };
+    new Notification(`${messageData.current}`, body);
+  }
+};
+
 const btn = document.getElementById("js-add-user-message");
 const chat = document.getElementById("js-messages-view");
 
@@ -209,6 +218,14 @@ socket.addEventListener("message", event => {
     data.ircChannels = [...new Set(newIrcChannels)];
     localStorage.setItem("data", JSON.stringify(data));
     showIrcChannels(data);
+
+    if (localStorage.getItem("notification") == "granted" && document.hidden) {
+      console.log(document.hidden, data.activeChannel, messageData.current);
+      let body = {
+        body: `${messageData.user} says: ${messageData.text}`
+      };
+      new Notification(`${messageData.current}`, body);
+    }
   } else {
     saveMessages(
       messageData.text,
@@ -217,13 +234,8 @@ socket.addEventListener("message", event => {
       messageData.date,
       messageData.current
     );
-    //Notication
-    if (localStorage.getItem("notification") == "granted") {
-      let body = {
-        body: `${messageData.user} says: ${messageData.text}`
-      };
-      new Notification(`${messageData.current}`, body);
-    }
+    //Notication when no channel active
+    showNotification(messageData);
     localStorage.setItem("data", JSON.stringify(data));
   }
 });
