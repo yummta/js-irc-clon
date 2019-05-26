@@ -133,6 +133,19 @@ showNotification = (messageData, visible) => {
   }
 };
 
+createChannelNotification = (checkChannel, newChannel) => {
+  if (
+    !checkChannel &&
+    localStorage.getItem("notification") == "granted" &&
+    !document.hidden
+  ) {
+    let body = {
+      body: `${newChannel} created`
+    };
+    new Notification("New Channel", body);
+  }
+};
+
 const btn = document.getElementById("js-add-user-message");
 const chat = document.getElementById("js-messages-view");
 
@@ -196,6 +209,10 @@ socket.addEventListener("message", event => {
     data.ircChannels = [...new Set(getIrcChannels)];
     localStorage.setItem("data", JSON.stringify(data));
     showIrcChannels(data);
+    let checkChannel = parseLocalStorage().userChannels.includes(
+      messageData.newChannel
+    );
+    createChannelNotification(checkChannel, messageData.newChannel);
   } else if (data.activeChannel == messageData.current) {
     let item = document.createElement("li");
     let date = new Date();
