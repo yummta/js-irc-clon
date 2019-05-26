@@ -118,7 +118,7 @@ function updateLocalStorageNewChannel(jsonData, channelName) {
 //Socket Chat
 saveMessages = (text, obj, user, date, channel) => {
   let data = parseLocalStorage();
-  if (Object.keys(data.ircChannels).includes(channel)) {
+  if (Object.values(data.userChannels).includes(channel)) {
     obj.ircMessages[channel].messages.push({
       text,
       date,
@@ -137,11 +137,7 @@ showNotification = (messageData, visible) => {
 };
 
 createChannelNotification = (checkChannel, newChannel) => {
-  if (
-    !checkChannel &&
-    localStorage.getItem("notification") == "granted" &&
-    !document.hidden
-  ) {
+  if (!checkChannel && localStorage.getItem("notification") == "granted") {
     let body = {
       body: `${newChannel} created`
     };
@@ -242,7 +238,6 @@ socket.addEventListener("message", event => {
     data.ircChannels = [...new Set(newIrcChannels)];
     localStorage.setItem("data", JSON.stringify(data));
     showIrcChannels(data);
-
     showNotification(messageData, document.hidden);
   } else {
     saveMessages(
