@@ -9,6 +9,10 @@
   display: none;
 }
 
+.relative {
+  position: relative;
+}
+
 /* security-space */
 .padding16{
   padding: 16px
@@ -18,4 +22,13 @@
 }
 .padding48{
   padding: 48px
+}
+
+@media screen and (max-width:480px) {
+  .padding48{
+    padding: 24px;
+  }
+  .padding24{
+    padding: 16px;
+  }
 }

@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="assets/css/layout/header.css" />
     <link rel="stylesheet" href="assets/css/layout/footer.css" />
     <link rel="stylesheet" href="assets/css/layout/form-new-channel.css" />
-    <link rel="stylesheet" href="assets/css/layout/list-channels.css" />
 
     <link rel="stylesheet" href="assets/css/components/inputs.css" />
     <link rel="stylesheet" href="assets/css/components/window.css" />
@@ -36,6 +35,16 @@
   <body class="center">
     <div class="wrapper-app window main-grid">
       <header id="user-header" class="header center window-dots">
+        <div id="js-open-channels" class="button-icon hamburguer">
+          <svg viewBox="0 0 469.333 469.333" width="16" height="16">
+            <path d="M53.333,106.667H416c29.417,0,53.333-23.927,53.333-53.333S445.417,0,416,0H53.333C23.917,0,0,23.927,0,53.333
+              S23.917,106.667,53.333,106.667z"/>
+            <path d="M416,181.333H53.333C23.917,181.333,0,205.26,0,234.667S23.917,288,53.333,288H416c29.417,0,53.333-23.927,53.333-53.333
+              S445.417,181.333,416,181.333z"/>
+            <path d="M416,362.667H53.333C23.917,362.667,0,386.594,0,416s23.917,53.333,53.333,53.333H416
+              c29.417,0,53.333-23.927,53.333-53.333S445.417,362.667,416,362.667z"/>
+          </svg>
+        </div>
         <h1 class="title">IRC - Welcome @</h1>
         <button
           tpe="button"
@@ -55,8 +64,19 @@
           N
         </button>
       </header>
-      <sections id="channel-list" class="channels padding16">
+      <sections id="channel-list" class="channels padding16 relative">
         <div class="list-channels">
+          <div id="js-close-channels" class="button-icon close">
+            <svg width="16" height="16" viewBox="0 0 348.333 348.334">
+              <path d="M336.559,68.611L231.016,174.165l105.543,105.549c15.699,15.705,15.699,41.145,0,56.85
+                c-7.844,7.844-18.128,11.769-28.407,11.769c-10.296,0-20.581-3.919-28.419-11.769L174.167,231.003L68.609,336.563
+                c-7.843,7.844-18.128,11.769-28.416,11.769c-10.285,0-20.563-3.919-28.413-11.769c-15.699-15.698-15.699-41.139,0-56.85
+                l105.54-105.549L11.774,68.611c-15.699-15.699-15.699-41.145,0-56.844c15.696-15.687,41.127-15.687,56.829,0l105.563,105.554
+                L279.721,11.767c15.705-15.687,41.139-15.687,56.832,0C352.258,27.466,352.258,52.912,336.559,68.611z"/>
+            </svg>
+          </div>
+
+          <div id="js-open-menu" class="hamburguer"></div>
           <h3 class="heading-2 title">Channels</h3>
           <ul id="irc-channels"></ul>
           <span id="js-open-lb" class="button -dark new-channel">
@@ -119,6 +139,7 @@
         </div>
       </form>
     </div>
+    <script src="assets/js/menu.js"></script>
     <script src="assets/js/helpers.js"></script>
     <script src="assets/js/format-date.js"></script>
     <script src="assets/js/light-box.js"></script>

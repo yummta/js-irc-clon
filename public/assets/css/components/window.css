@@ -27,3 +27,10 @@
 .window-dots:after{
   left: 38px;
 }
+
+@media screen and (max-width: 480px) {
+  .window-dots:before,
+  .window-dots:after{
+    content: none
+  }
+}
