@@ -18,3 +18,12 @@
 .chat {
   grid-area: chat
 }
+
+@media screen and (max-width: 480px) {
+  .main-grid{
+    grid-template:
+    "header" 40px
+    "tabs" 48px
+    "chat" 1fr / 1fr;
+  }
+}
