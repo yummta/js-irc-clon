@@ -252,3 +252,10 @@ showIrcChannels = data => {
     $channelChild.innerHTML = data;
   }
 };
+
+function showWelcomeUsername(){
+  const $titleMessage = document.getElementsByTagName("h1")[0];
+  $titleMessage.textContent += parseLocalStorage().user;
+}
+
+showWelcomeUsername();
