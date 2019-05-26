@@ -316,3 +316,12 @@ $deleteLocalStorage.addEventListener("click", deleteLocalData);
 function deleteLocalData() {
   localStorage.clear();
 }
+
+$deleteLocalStorage.addEventListener("click", enableNotifications);
+
+enableNotifications = () => {
+  Notification.requestPermission().then(value => {
+    localStorage.setItem("notification", value);
+    $deleteLocalStorage.style.color("green");
+  });
+};
