@@ -40,7 +40,7 @@ body {
 }
 
 .login-form .login {
-  background-color: var(--c-backgorund);
+  background-color: var(--c-background);
 }
 
 .login-form .title {
@@ -55,10 +55,6 @@ body {
   align-items: center;
 }
 
-.login-form form label {
-  display: none;
-}
-
 .login-form form input {
   width: 65%;
   font-size: 2em;
@@ -69,14 +65,10 @@ body {
   border: 3px solid #000;
 }
 
-@media screen and (min-width: 320px) {
+@media screen and (max-width: 768px) {
   .window.login {
     height: 100vh;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .window.login {
-    height: 80vh;
+    width: 100vw;
+    display: grid;
   }
 }
