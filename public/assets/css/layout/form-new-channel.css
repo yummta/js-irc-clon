@@ -1,10 +1,11 @@
 .form-new-channel{
-  background-color: var(--c-yellow);
+  background-color: var(--c-background);
 }
 
 .form-new-channel .title{
   height: 40px;
   border-bottom: 3px solid var(--c-black);
+  background-color: var(--c-green);
   margin-bottom: 0;
 }
 
