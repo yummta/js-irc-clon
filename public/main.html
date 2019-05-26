@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="assets/css/layout/grid.css" />
     <link rel="stylesheet" href="assets/css/layout/header.css" />
     <link rel="stylesheet" href="assets/css/layout/footer.css" />
-    <link rel="stylesheet" href="assets/css/layout/chat.css" />
     <link rel="stylesheet" href="assets/css/layout/form-new-channel.css" />
     <link rel="stylesheet" href="assets/css/layout/list-channels.css" />
 
@@ -42,7 +41,9 @@
         <div class="list-channels">
           <h3 class="heading-2 title">Channels</h3>
           <ul id="irc-channels"></ul>
-          <span id="js-open-lb" class="button -dark new-channel"> New channel</span>
+          <span id="js-open-lb" class="button -dark new-channel">
+            New channel</span
+          >
         </div>
 
         <footer class="footer">
@@ -55,8 +56,6 @@
             <a href="#">@yummta</a>
           </p>
         </footer>
-
-
       </sections>
 
       <sections class="tabs">
@@ -83,11 +82,20 @@
     </div>
     <div id="js-light-box" class="light-box">
       <form action="createChannel" class="window form-new-channel">
-        <label for="channels" class="heading-2 center title window-dots">Create a new Channel</label>
+        <label for="channels" class="heading-2 center title window-dots"
+          >Create a new Channel</label
+        >
         <div class="padding48">
-          <input class="name-channel" id="js-input-channel" type="text" placeholder="Name channel"/>
+          <input
+            class="name-channel"
+            id="js-input-channel"
+            type="text"
+            placeholder="Name channel"
+          />
           <div class="actions">
-            <button id="js-button-create-channel" class="button -dark">Create Channel</button>
+            <button id="js-button-create-channel" class="button -dark">
+              Create Channel
+            </button>
             <button id="js-close-lb" class="button cancel">Cancel</button>
           </div>
         </div>
