@@ -5,7 +5,7 @@ body {
   font-family: var(--ff-regular);
   font-size: 18px;
   line-height: 1.2;
-  background-color: var(--c-yellow);
+  background-color: var(--c-gray);
 }
 
 ::selection {
