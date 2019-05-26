@@ -4,6 +4,8 @@ const $buttonCreateChannel = document.getElementById(
   "js-button-create-channel"
 );
 const $inputChannel = document.getElementById("js-input-channel");
+const $deleteLocalStorage = document.getElementById("clear-data");
+const $allowNotifications = document.getElementById("allow-notifications");
 
 document.querySelector("body").addEventListener("click", function(event) {
   if (event.target.classList.contains("channel")) {
@@ -309,3 +311,8 @@ showWelcomeUsername();
 $openLightBox.addEventListener("click", () => {
   $inputChannel.focus();
 });
+
+$deleteLocalStorage.addEventListener("click", deleteLocalData);
+function deleteLocalData() {
+  localStorage.clear();
+}
