@@ -1,0 +1,78 @@
+.wrapper-app{
+  max-width: 1200px;
+  width: 90vw;
+  height: 90vh;
+  box-sizing: border-box;
+  background-color: var(--c-backgorund)
+}
+
+.channels{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 3px solid var(--c-black);
+}
+
+/* .send-message */
+.send-message{
+  display: flex;
+  overflow: hidden;
+  font-size: var(--fs-big)
+}
+
+.send-message .input-text{
+  flex: 1 1 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 0;
+}
+
+.send-message .submit{
+  flex: 0 0 96px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* chat */
+.chat{
+  position: relative
+}
+
+.chat .list-messages{
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 88px;
+  top: 16px;
+  overflow: auto;
+  padding-bottom: 16px
+}
+
+.chat .send-message{
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 16px;
+}
+
+/* list-channels */
+
+.list-channels .title{
+  margin-bottom: 0.2em;
+}
+
+.list-channels .channel{
+  padding: 0.3em 0.5em;
+  transition: all 0.25s;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.list-channels .channel:hover{
+  background-color: var(--c-green);
+}
+
+.list-channels .new-channel{
+  margin-top: 1em
+}

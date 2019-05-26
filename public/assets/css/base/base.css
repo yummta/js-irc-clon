@@ -1,0 +1,18 @@
+body {
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  font-family: var(--ff-regular);
+  font-size: 18px;
+  line-height: 1.2;
+  background-color: var(--c-gray);
+}
+
+::selection {
+  background-color: var(--c-black);
+  color: white;
+}
+
+a{
+  color: var(--c-link)
+}

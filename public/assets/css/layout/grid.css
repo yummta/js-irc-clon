@@ -1,0 +1,20 @@
+.main-grid{
+  display: grid;
+  grid-template:
+    "header header" 40px
+    "channels tabs" 56px
+    "channels chat" 1fr / 160px 1fr;
+}
+
+.header {
+  grid-area: header
+}
+.channels {
+  grid-area: channels
+}
+.tabs {
+  grid-area: tabs
+}
+.chat {
+  grid-area: chat
+}

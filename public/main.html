@@ -4,63 +4,98 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Anonymous+Pro&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="assets/css/styles_main.css" />
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="assets/css/base/fonts.css" />
+    <link rel="stylesheet" href="assets/css/base/variables.css" />
+    <link rel="stylesheet" href="assets/css/base/reset.css" />
+    <link rel="stylesheet" href="assets/css/base/headdings.css" />
+    <link rel="stylesheet" href="assets/css/base/base.css" />
+    <link rel="stylesheet" href="assets/css/base/helpers.css" />
+
+    <link rel="stylesheet" href="assets/css/layout/grid.css" />
+    <link rel="stylesheet" href="assets/css/layout/header.css" />
+    <link rel="stylesheet" href="assets/css/layout/footer.css" />
+    <link rel="stylesheet" href="assets/css/layout/chat.css" />
+    <link rel="stylesheet" href="assets/css/layout/form-new-channel.css" />
+    <link rel="stylesheet" href="assets/css/layout/list-channels.css" />
+
+    <link rel="stylesheet" href="assets/css/components/inputs.css" />
+    <link rel="stylesheet" href="assets/css/components/window.css" />
+    <link rel="stylesheet" href="assets/css/components/light-box.css" />
+    <link rel="stylesheet" href="assets/css/components/buttons.css" />
+    <link rel="stylesheet" href="assets/css/components/tabs.css" />
+    <link rel="stylesheet" href="assets/css/components/message.css" />
+    <link rel="stylesheet" href="assets/css/components/separator.css" />
+
+    <link rel="stylesheet" href="assets/css/pages/main.css" />
+
+    <link rel="stylesheet" href="assets/css/shame.css" />
     <title>IRC Cool Log In</title>
   </head>
-  <body>
-    <header id="user-header" class="header"><h1>IRC</h1></header>
-    <section id="channel-list" class="channelList">
-      <div class="channels">
-        <h3>User Channels</h3>
-        <ul id="list-user-channels"></ul>
-      </div>
-      <div class="channels">
-        <h3>IRC Channels</h3>
-        <ul id="irc-channels"></ul>
-      </div>
-      <form action="createChannel" class="createChannel">
-        <label for="channels"
-          >Channel
-          <button id="js-button-create-channel" class="btn">
-            Create Channel
-          </button>
-          <input id="js-input-channel" type="text" />
-        </label>
-      </form>
-    </section>
-    <section id="js-messages-list" class="messagesList messages">
-      <ul id="js-messages-view" class="ulList">
-        <!-- chat messages formatted-->
-      </ul>
-    </section>
-    <section id="js-users-list" class="usersList">
-      <p>User 1</p>
-      <p>User 2</p>
-      <p>User 3</p>
-    </section>
+  <body class="center">
+    <div class="wrapper-app window main-grid">
+      <header id="user-header" class="header center window-dots">
+        <h1 class="title">IRC - Welcome @</h1>
+      </header>
+      <sections id="channel-list" class="channels padding16">
+        <div class="list-channels">
+          <h3 class="heading-2 title">Channels</h3>
+          <ul id="irc-channels"></ul>
+          <span id="js-open-lb" class="button -dark new-channel"> New channel</span>
+        </div>
 
-    <footer class="footer">
-      <form class="formInput">
-        <input
-          type="text"
-          id="js-input-user-message"
-          aria-label="Chat here"
-          class="keyboardInput"
-          placeholder="Chat here!"
-          autocomplete="off"
-          autofocus
-        />
-        <button id="js-add-user-message" class="btn">
-          Enter
-        </button>
+        <footer class="footer">
+          <p>
+            With love by
+            <a href="#">@lian</a>
+            <a href="#">@cristian</a>
+            <a href="#">@mayra</a>
+            <a href="#">@carlos</a>
+            <a href="#">@yummta</a>
+          </p>
+        </footer>
+
+
+      </sections>
+
+      <sections class="tabs">
+        <!-- available modifiers -active, alert -->
+        <ul id="list-user-channels" class="list"></ul>
+      </sections>
+      <sections id="js-messages-list" class="chat padding24">
+        <ul id="js-messages-view" class="list-messages"></ul>
+        <form class="send-message">
+          <input
+            type="text"
+            id="js-input-user-message"
+            aria-label="Chat here"
+            class="input-text"
+            placeholder="Chat here..."
+            autocomplete="off"
+            autofocus
+          />
+          <button id="js-add-user-message" class="button -dark submit">
+            Send
+          </button>
+        </form>
+      </sections>
+    </div>
+    <div id="js-light-box" class="light-box">
+      <form action="createChannel" class="window form-new-channel">
+        <label for="channels" class="heading-2 center title window-dots">Create a new Channel</label>
+        <div class="padding48">
+          <input class="name-channel" id="js-input-channel" type="text" placeholder="Name channel"/>
+          <div class="actions">
+            <button id="js-button-create-channel" class="button -dark">Create Channel</button>
+            <button id="js-close-lb" class="button cancel">Cancel</button>
+          </div>
+        </div>
       </form>
-    </footer>
+    </div>
     <script src="assets/js/helpers.js"></script>
     <script src="assets/js/format-date.js"></script>
+    <script src="assets/js/light-box.js"></script>
     <script src="assets/js/login.js"></script>
     <script src="assets/js/main.js"></script>
   </body>

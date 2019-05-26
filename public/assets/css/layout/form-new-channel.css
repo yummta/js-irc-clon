@@ -1,0 +1,24 @@
+.form-new-channel{
+  background-color: var(--c-background);
+}
+
+.form-new-channel .title{
+  height: 40px;
+  border-bottom: 3px solid var(--c-black);
+  background-color: var(--c-green);
+  margin-bottom: 0;
+}
+
+.form-new-channel .actions{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.form-new-channel .name-channel{
+  margin-bottom: 16px;
+}
+
+.form-new-channel .cancel{
+  margin-right: 8px;
+}
