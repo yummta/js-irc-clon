@@ -290,12 +290,13 @@ $openLightBox.addEventListener("click", () => {
 
 $deleteLocalStorage.addEventListener("click", () => {
   localStorage.clear();
+  location.reload();
 });
 
 $allowNotifications.addEventListener("click", () => {
   Notification.requestPermission().then(value => {
     localStorage.setItem("notification", value);
-    $allowNotifications.style.backgroundColor = "green";
+    $allowNotifications.style.backgroundColor = "rgb(150, 253, 109)";
   });
 });
 showNotification = (messageData, visible) => {
