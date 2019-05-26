@@ -1,8 +1,8 @@
 //scroll at the end of the windows chat
 function lastLine() {
   document.getElementById(
-    "js-messages-list"
-  ).scrollTop = document.getElementById("js-messages-list").scrollHeight;
+    "js-messages-view"
+  ).scrollTop = document.getElementById("js-messages-view").scrollHeight;
 }
 
 //avoid weird characters
