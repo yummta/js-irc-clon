@@ -1,8 +1,8 @@
 .separator{
-  background-color: var(--c-gray);
+  background-color: var(--c-blue);
   padding: 0.5em 0;
   font-size: var(--fs-small);
   border-radius: 8px;
   margin: 4px 0;
-  color: var(--c-gray-text)
+  color: var(--c-black)
 }
