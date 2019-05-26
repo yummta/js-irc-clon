@@ -22,16 +22,11 @@ document.querySelector("body").addEventListener("click", function(event) {
     if (!event.target.classList.contains("irc")) {
       event.target.classList.add("-active");
     } else {
-      let userButtonChannels = $allButtonChannels.filter(button => {
-        return button.dataset.name == activeChannel;
-      });
-      userButtonChannels[1].classList.add("-active");
-
-      if (!data.userChannels.includes(activeChannel)) {
-        data.userChannels.push(activeChannel);
-        data.ircMessages[activeChannel] = { messages: [] };
+      if (!data.userChannels.includes(event.target.dataset.name)) {
+        data.userChannels.push(event.target.dataset.name);
+        data.ircMessages[event.target.dataset.name] = { messages: [] };
         localStorage.setItem("data", JSON.stringify(data));
-        renderNewChannel(activeChannel);
+        renderNewChannel(event.target.dataset.name);
         showActiveChannel();
       }
     }
@@ -62,7 +57,9 @@ function renderMessages(messages) {
     item.classList.add("look-disabled", "message");
     let date = `[${formatAMPM(message.date)}]`;
     let user = `<span class="username">@${message.Author}</span>`;
-    $messagesView.appendChild(item).innerHTML += `${date} ${user} ${message.text}`;
+    $messagesView.appendChild(item).innerHTML += `${date} ${user} ${
+      message.text
+    }`;
   });
 }
 
@@ -116,7 +113,7 @@ function updateLocalStorageNewChannel(jsonData, channelName) {
 //Socket Chat
 saveMessages = (text, obj, user, date, channel) => {
   let data = parseLocalStorage();
-  if (Object.keys(data.ircChannels).includes(channel)) {
+  if (Object.values(data.userChannels).includes(channel)) {
     obj.ircMessages[channel].messages.push({
       text,
       date,
@@ -131,6 +128,15 @@ showNotification = (messageData, visible) => {
       body: `${messageData.user} says: ${messageData.text}`
     };
     new Notification(`${messageData.current}`, body);
+  }
+};
+
+createChannelNotification = (checkChannel, newChannel) => {
+  if (!checkChannel && localStorage.getItem("notification") == "granted") {
+    let body = {
+      body: `${newChannel} created`
+    };
+    new Notification("New Channel", body);
   }
 };
 
@@ -158,7 +164,9 @@ socket.addEventListener("open", () => {
       if (currentDay !== day) {
         let separator = document.createElement("span");
         separator.className = "center separator";
-        $messagesView.appendChild(separator).innerHTML = `${formatdate(value.date)}`;
+        $messagesView.appendChild(separator).innerHTML = `${formatdate(
+          value.date
+        )}`;
         day = currentDay;
       }
       let item = document.createElement("li");
@@ -166,7 +174,9 @@ socket.addEventListener("open", () => {
       let date = `[${formatAMPM(value.date)}]`;
       let user = `<span class="username">@${value.Author}</span>`;
 
-      $messagesView.appendChild(item).innerHTML += `${date} ${user} ${value.text}`;
+      $messagesView.appendChild(item).innerHTML += `${date} ${user} ${
+        value.text
+      }`;
     });
   }
   //move scroll at the end
@@ -195,13 +205,19 @@ socket.addEventListener("message", event => {
     data.ircChannels = [...new Set(getIrcChannels)];
     localStorage.setItem("data", JSON.stringify(data));
     showIrcChannels(data);
+    let checkChannel = parseLocalStorage().userChannels.includes(
+      messageData.newChannel
+    );
+    createChannelNotification(checkChannel, messageData.newChannel);
   } else if (data.activeChannel == messageData.current) {
     let item = document.createElement("li");
     item.classList.add("message");
 
     let date = `[${formatAMPM(new Date())}]`;
     let user = `<span class="username">@${messageData.user}</span>`;
-    $messagesView.appendChild(item).innerHTML += `${date} ${user} ${messageData.text}`;
+    $messagesView.appendChild(item).innerHTML += `${date} ${user} ${
+      messageData.text
+    }`;
 
     lastLine();
 
@@ -217,7 +233,6 @@ socket.addEventListener("message", event => {
     data.ircChannels = [...new Set(newIrcChannels)];
     localStorage.setItem("data", JSON.stringify(data));
     showIrcChannels(data);
-
     showNotification(messageData, document.hidden);
   } else {
     saveMessages(
@@ -278,7 +293,7 @@ showIrcChannels = data => {
   }
 };
 
-function showWelcomeUsername(){
+function showWelcomeUsername() {
   const $titleMessage = document.getElementsByTagName("h1")[0];
   $titleMessage.textContent += parseLocalStorage().user;
 }
