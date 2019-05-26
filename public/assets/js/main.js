@@ -124,8 +124,8 @@ saveMessages = (text, obj, user, date, channel) => {
   }
 };
 
-showNotification = messageData => {
-  if (localStorage.getItem("notification") == "granted" && !document.hidden) {
+showNotification = (messageData, visible) => {
+  if (localStorage.getItem("notification") == "granted" && visible) {
     let body = {
       body: `${messageData.user} says: ${messageData.text}`
     };
@@ -219,13 +219,7 @@ socket.addEventListener("message", event => {
     localStorage.setItem("data", JSON.stringify(data));
     showIrcChannels(data);
 
-    if (localStorage.getItem("notification") == "granted" && document.hidden) {
-      console.log(document.hidden, data.activeChannel, messageData.current);
-      let body = {
-        body: `${messageData.user} says: ${messageData.text}`
-      };
-      new Notification(`${messageData.current}`, body);
-    }
+    showNotification(messageData, document.hidden);
   } else {
     saveMessages(
       messageData.text,
@@ -235,7 +229,7 @@ socket.addEventListener("message", event => {
       messageData.current
     );
     //Notication when no channel active
-    showNotification(messageData);
+    showNotification(messageData, !document.hidden);
     localStorage.setItem("data", JSON.stringify(data));
   }
 });
