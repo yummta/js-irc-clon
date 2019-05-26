@@ -22,6 +22,13 @@ document.querySelector("body").addEventListener("click", function(event) {
     if (!event.target.classList.contains("irc")) {
       event.target.classList.add("-active");
     } else {
+      let userButtonChannels = $allButtonChannels.filter(button => {
+        return button.dataset.name == activeChannel;
+      });
+      console.log(userButtonChannels);
+      if (userButtonChannels.length > 1) {
+        userButtonChannels[1].classList.add("-active");
+      }
       if (!data.userChannels.includes(event.target.dataset.name)) {
         data.userChannels.push(event.target.dataset.name);
         data.ircMessages[event.target.dataset.name] = { messages: [] };
@@ -299,3 +306,7 @@ function showWelcomeUsername() {
 }
 
 showWelcomeUsername();
+
+$openLightBox.addEventListener("click", () => {
+  $inputChannel.focus();
+});
