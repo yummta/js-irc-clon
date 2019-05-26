@@ -1,6 +1,7 @@
 .header{
   position: relative;
   border-bottom: 3px solid var(--c-black);
+  background-color:var(--c-green);
 }
 
 .header .title{
