@@ -6,11 +6,20 @@
   justify-content: center;
   font-size: var(--fs-small);
   cursor: pointer;
-  text-transform: uppercase
+  text-transform: uppercase;
+  background-color: var(--c-baackground);
 }
 
 .button.-dark{
   border: 3px solid var(--c-black);
   background-color: var(--c-black);
   color: white;
+}
+
+.button-icon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
 }

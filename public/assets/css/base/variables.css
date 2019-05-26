@@ -8,12 +8,12 @@
   --c-yellow: #F9F3E5;
   --c-gray-text: #8C8C8C;
   --c-link: #4E72CD;
-  --c-backgorund: white;
+  --c-background: white;
 
   /* font-size */
   --fs-bigger: 28px;
   --fs-big: 20px;
-  --fs-regular: 1em;
+  --fs-regular: 1rem;
   --fs-small: 14px;
 
   /* font-family */

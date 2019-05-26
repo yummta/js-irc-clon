@@ -7,7 +7,7 @@
 .tabs .list{
   display: flex;
   padding: 0 16px;
-  padding-left: 0 19px;
+  padding-left: 19px;
   box-sizing: border-box;
   border-bottom: 3px solid var(--c-black)
 }
@@ -38,7 +38,7 @@
   left: 0;
   right: 0;
   position: absolute;
-  background-color: var(--c-backgorund);
+  background-color: var(--c-background);
 }
 
 .tabs .item.-active:hover{
@@ -55,5 +55,12 @@
   }
   50%, 100% {
     background-color: var(--c-red);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .tabs .list{
+    padding: 0 8px;
+    padding-left: 11px;
   }
 }
