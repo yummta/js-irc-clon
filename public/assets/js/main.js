@@ -39,6 +39,7 @@ document.querySelector("body").addEventListener("click", function(event) {
 
     let messages = getMessageStorage(activeChannel);
     renderMessages(messages);
+    focusMessagesInput();
   }
 });
 
@@ -309,3 +310,8 @@ showWelcomeUsername();
 $openLightBox.addEventListener("click", () => {
   $inputChannel.focus();
 });
+
+function focusMessagesInput() {
+  let $inputMessage = document.getElementById("js-input-user-message");
+  $inputMessage.focus();
+}
