@@ -25,7 +25,6 @@ document.querySelector("body").addEventListener("click", function(event) {
       let userButtonChannels = $allButtonChannels.filter(button => {
         return button.dataset.name == activeChannel;
       });
-      console.log(userButtonChannels);
       if (userButtonChannels.length > 1) {
         userButtonChannels[1].classList.add("-active");
       }
