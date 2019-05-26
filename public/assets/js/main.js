@@ -111,17 +111,34 @@ function updateLocalStorageNewChannel(jsonData, channelName) {
 
 //Socket Chat
 saveMessages = (text, obj, user, date, channel) => {
-  obj.ircMessages[channel].messages.push({
-    text,
-    date,
-    Author: user
-  });
+  let data = parseLocalStorage();
+  if (Object.keys(data.ircChannels).includes(channel)) {
+    obj.ircMessages[channel].messages.push({
+      text,
+      date,
+      Author: user
+    });
+  }
+};
+
+showNotification = (messageData, visible) => {
+  if (localStorage.getItem("notification") == "granted" && visible) {
+    let body = {
+      body: `${messageData.user} says: ${messageData.text}`
+    };
+    new Notification(`${messageData.current}`, body);
+  }
 };
 
 const btn = document.getElementById("js-add-user-message");
 
 //LOAD ALL USER DATA IN LOCAL STORAGE
 socket.addEventListener("open", () => {
+  //Ask permision to nofication
+  Notification.requestPermission().then(value => {
+    localStorage.setItem("notification", value);
+  });
+
   //Getting dom elements and storare data
   let lsData = localStorage.getItem("data");
   let data = parseLocalStorage();
@@ -196,6 +213,8 @@ socket.addEventListener("message", event => {
     data.ircChannels = [...new Set(newIrcChannels)];
     localStorage.setItem("data", JSON.stringify(data));
     showIrcChannels(data);
+
+    showNotification(messageData, document.hidden);
   } else {
     saveMessages(
       messageData.text,
@@ -204,6 +223,8 @@ socket.addEventListener("message", event => {
       messageData.date,
       messageData.current
     );
+    //Notication when no channel active
+    showNotification(messageData, !document.hidden);
     localStorage.setItem("data", JSON.stringify(data));
   }
 });
