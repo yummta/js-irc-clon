@@ -91,6 +91,7 @@ function createChannel(channelName) {
   }
   $inputChannel.value = "";
   $inputChannel.focus();
+  closeLightBox();
 }
 
 function renderNewChannel(channelName) {
