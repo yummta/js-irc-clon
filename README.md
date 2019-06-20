@@ -3,11 +3,26 @@
 Create a multi channel chat application using the WebSocket server in [codeableorg/websocket-server](https://github.com/codeableorg/websocket-server) as your WebSocket server.
 
 ## Team
+
+- Paul Portillo
 - Carlos Sandoval
 - Cristian Granda
 - Lian Nivin
 - Mayra Navarro
-- Paul Portillo
+
+## How to run
+
+```bash
+  yarn install
+  yarn start
+```
+
+Now, view in `http://localhost:3000`
+
+## Preview
+
+![preview](https://raw.githubusercontent.com/yummta/js-irc-clon/master/preview.png)
+
 ## Requirements
 
 - [ ] The user should be asked for a username when trying to access.
@@ -25,7 +40,7 @@ Create a multi channel chat application using the WebSocket server in [codeableo
 - [ ] A message must have a content, an author and the date.
 - [ ] The date of a message should be displayed as only the hour with minutes.
 - [ ] The messages should be grouped by date, without caring about the hour and minutes.
-  - [ ] The grouped messages should have a visual separator with other groups. 
+  - [ ] The grouped messages should have a visual separator with other groups.
   - [ ] The current day should be displayed as `Today`. (_optional_)
   - [ ] The previous day should be displayed as `Yesterday`. (_optional_)
 
